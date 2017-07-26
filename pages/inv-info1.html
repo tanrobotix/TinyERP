@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html id="SuaDH" spellcheck="false">
+	<head>
+		<meta charset="utf-8" />
+		<title>Tiếp nhận thông tin đơn hàng</title>
+		
+		<link rel="stylesheet" href="../css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-select.min.css">
+	
+		<link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap.min.css"/>
+		<link href="../css/fileinput.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../css/myCSS.css">
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+	    <!-- Custom CSS -->
+	    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="../assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+	    <!-- Custom Fonts -->
+	    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--<script>
+			$(document).on('click', '.glyphicon-remove', function () {
+			$(this).closest('tr').remove();
+			return false;
+			});
+		</script>-->
+		
+		<!-- <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="./js/dataTables.bootstrap.min.js"></script> -->
+		<!-- <script>
+			$(document).ready(function(){
+				$('#tableTKKH').DataTable({
+					"language": {
+						"sEmptyTable": "Không có dữ liệu trong bảng",
+						"sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+						"sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+						"sInfoFiltered": "(Được lọc từ tổng số _MAX_ mục)",
+						"sInfoPostFix": "",
+						"sInfoThousands": ",",
+						"sLengthMenu": "Xem _MENU_ mục",
+						"sLoadingRecords": "Đang tải...",
+						"sProcessing": "Đang xử lý...",
+						"sSearch": "Tìm kiếm:",
+						"sZeroRecords": "Không tìm thấy kết quả",
+						"oPaginate": {
+							"sFirst": "Đầu",
+							"sLast": "Cuối",
+							"sNext": "Tiếp",
+							"sPrevious": "Trước"
+						},
+						"oAria": {
+							"sSortAscending": ": Kích hoạt để sắp xếp cột tăng dần",
+							"sSortDescending": ": Kích hoạt hoạt để sắp xếp cột giảm dần"
+						}
+					},
+					searching: false,
+					ordering: false,
+					bFilter: false,
+					"lengthChange": false,
+					"info": true,
+					"pageLength": 4
+				});
+			});
+		</script> -->
+	</head>
+	<body>
+	<!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="dashboard.html">Dashboard</a>
+            </div>
+            <div class="collapse navbar-collapse">
+            	<ul class="nav navbar-nav navbar-right">
+            		<li>
+            			<a href="">
+            				Account
+            			</a>
+            		</li>
+            		<li>
+            			<a href="login.html">
+            				Log in
+            			</a>
+            		</li>
+            	</ul>
+            </div>
+        </div>
+    </nav>
+		<div class="container">
+			<fieldset>
+				<legend><h3 class="fontpop">TIẾP NHẬN THÔNG TIN KHÁCH HÀNG</h3></legend>
+					<div class="panel panel-info">
+						<div class="panel-heading" role="button" data-toggle="collapse" data-target="#TTKH" href="#TTKH">
+							<i class="fa fa-sort-desc"></i> Thông tin khách hàng
+						</div>	
+						<div id="TTKH" class="panel-body collapse in">
+							<br>
+							<form method="post">
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Tên đơn vị <font color="red">*</font></label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<input type="text" class="form-control" placeholder="Tên đơn vị" maxlength="100" required>
+											<span class="input-group-btn">
+												<button class="btn btn-success" type="button" data-toggle="modal" data-target="#TKKH"><i class="fa fa-search" aria-hidden="true"></i></button>
+											</span>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Mã đơn vị <font color="red">*</font></label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<table>
+											<tr>
+												<td><input type="text" class="form-control" placeholder="Kí hiệu" maxlength="3" required></td>
+												<td>&nbsp;</td>
+												<td style="cursor:not-allowed"><input id="txtLHDN" type="text" class="form-control" required data-readonly></td>
+												<td>&nbsp;</td>
+												<td style="cursor:not-allowed"><input id="txtLVHD" type="text" class="form-control" required data-readonly></td>
+												<td>&nbsp;</td>
+												<td style="cursor:not-allowed"><input id="txtSTT" type="text" value="01" class="form-control" required data-readonly></td>
+											</tr>	
+										</table>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Loại hình doanh nghiệp</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<select id="LHDN" class="form-control" data-width="100%">
+												<option value="FN">Doanh nghiệp nước ngoài (Trụ sở, đăng ký hoạt động ở nước ngoài)</option>
+												<option value="FD">Văn phòng đại diện doanh nghiệp nước ngoài</option>
+												<option value="FI">Doanh nghiệp FDI (Trụ sở, đăng ký hoạt động tại Việt Nam)</option>
+												<option value="VN">Doanh nghiệp nhà nước</option>
+												<option value="VC">Công ty cổ phần</option>
+												<option value="VT">Công ty trách nhiệm hữu hạn</option>
+												<option value="VS">Cơ sở sản xuất, hộ kinh doanh cá thể</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Lĩnh vực hoạt động</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<select id="LVHD" class="form-control" data-width="100%">
+												<option value="1">Thiết kế, tính toán, mô phỏng</option>
+												<option value="2">Sản xuất máy móc thiết bị</option>
+												<option value="3">Sản xuất, lắp ráp hàng tiêu dùng</option>
+												<option value="4">Sản xuất hàng công nghiệp hỗ trợ</option>
+												<option value="5">Công ty thương mại</option>
+												<option value="6">Phát triển sản phẩm mới</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Địa chỉ</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" placeholder="Địa chỉ" maxlength="200">
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Người đại diện</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" placeholder="Người đại diện" maxlength="100">
+									</div>
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Mã số thuế</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" placeholder="Mã số thuế" maxlength="13">
+									</div>
+								</div>
+								<br>	
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Chức danh</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" placeholder="Chức danh" maxlength="50">
+									</div>
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Điện thoại</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="tel" class="form-control" placeholder="(+84) 988 123 456" maxlength="20">
+									</div>
+								</div>
+								<br>	
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Thư điện tử</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="email" class="form-control" placeholder="abcxyz@mail.com" maxlength="100">
+									</div>
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Di động</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" placeholder="(+84) 988 123 456" maxlength="20">
+									</div>
+								</div>
+								<br>	
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Trang Web</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="url" class="form-control" placeholder="https://abc.com" maxlength="100">
+									</div>
+									<div class="col-sm-2">
+										<div class="pull-right">
+											<label>Fax</label>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" placeholder="(+84) 988 123 456" maxlength="20">
+									</div>
+								</div>
+								<br>
+								<div class="row">
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary">Lưu thông tin khách hàng</button>
+									</div>
+								</div>
+							</form>
+							<br>
+						</div>
+					</div>
+					<form>
+					<div class="panel panel-info">
+						<div class="panel-heading" role="button" data-toggle="collapse" data-target="#TTDH">
+							<i class="fa fa-sort-asc"></i> Thông tin đơn hàng
+						</div>
+						<div id="TTDH" class="panel-body collapse">
+							<br>
+							<div class="row">
+								<div class="col-sm-2">
+									<label>Người tiếp nhận <font color="red">*</font></label>
+								</div>
+								<div class="col-sm-3">
+									<div style="cursor:not-allowed"><input type="text" class="form-control" value="admin" placeholder="Người tiếp nhận" required data-readonly></div>
+								</div>
+								<div class="col-sm-2">
+									<label>Ngày khởi tạo <font color="red">*</font></label>
+								</div>
+								<div class="col-sm-3">
+									<input id="NKT" type="date" class="form-control" required>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-2">
+									<label>Tên đơn hàng <font color="red">*</font></label>
+								</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" placeholder="Tên đơn hàng" required maxlength="100">
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<h4>Nội dung yêu cầu</h4>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-12">
+									<textarea class="form-control" rows="6" maxlength="1000"></textarea>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-2">
+									<label>Thời gian hoàn tất</label>
+								</div>
+								<div class="col-sm-3">
+									<input id="TGHT" type="date" class="form-control">
+								</div>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" placeholder="Ghi chú" maxlength="100">
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-2">
+									<label>Số lượng</label>
+								</div>
+								<div class="col-sm-3">
+									<input type="number" min="1" max="9999999999" value="1" class="form-control" placeholder="Số lượng">
+								</div>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" placeholder="Đơn vị tính" maxlength="20">
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-2">
+									<label>Yêu cầu thêm</label>
+								</div>
+								<div class="col-sm-8">
+									<table id="tableYCT" class="table table-bordered">
+										<colgroup>
+											<col bgcolor="#eee"/>
+										</colgroup>
+										<thead align="center">
+											<tr bgcolor="#eee">
+												<td class="col-sm-1"></td>
+												<td class="col-sm-5">Thuộc tính</td>
+												<td class="col-sm-5">Giá trị</td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td><input type="text" maxlength="50"></td>
+												<td><input type="text" maxlength="50"></td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td><input type="text" maxlength="50"></td>
+												<td><input type="text" maxlength="50"></td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td><input type="text" maxlength="50"></td>
+												<td><input type="text" maxlength="50"></td>
+											</tr>
+											<tr>
+												<td><span>4</span></td>
+												<td><input type="text" maxlength="50"></td>
+												<td><input type="text" maxlength="50"></td>
+											</tr>
+											<tr>
+												<td id="addRow" role="button">...</td>
+												<td><input readonly></td>
+												<td><input readonly></td>
+											</tr>		
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-info">
+						<div class="panel-heading" role="button" data-toggle="collapse" data-target="#TTDK">
+							<i class="fa fa-sort-asc"></i> Tập tin đính kèm
+						</div>
+						<div id="TTDK" class="panel-body collapse">
+							<br>
+							<div class="row">
+								<div class="col-sm-2">
+									<label>Tập tin đính kèm</label>
+								</div>
+								<div class="col-sm-10">
+									<input id="input-iconic" name="input-iconic[]" type="file" multiple class="file-loading">
+									<script>
+										$("#input-iconic").fileinput({
+											language: "vi",
+											uploadUrl: "./",
+											uploadAsync: false,
+											showUpload: false,
+											showRemove: false,
+											fileActionSettings: {
+												'showZoom': true,
+												'indicatorNew': '',
+												'indicatorNewTitle': ''
+											},
+											layoutTemplates: {
+												actionUpload: '',
+												main1:
+												'<div class=\'input-group {class}\'>\n' +
+												'   <div class=\'input-group-btn\'>\n' +
+												'       {browse}\n' +
+												'       {upload}\n' +
+												'       {remove}\n' +
+												'   </div>\n' +
+												'   {caption}\n' +
+												'</div>\n' +
+												'{preview}'
+											},
+											overwriteInitial: false,
+											initialPreviewAsData: true,
+											initialPreviewFileType: 'image', 
+											preferIconicPreview: true,
+											previewFileIconSettings: {
+												'doc': '<i class="fa fa-file-word-o text-primary"></i>',
+												'xls': '<i class="fa fa-file-excel-o text-success"></i>',
+												'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+												'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+												'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+												'htm': '<i class="fa fa-file-code-o text-info"></i>',
+												'txt': '<i class="fa fa-file-text-o text-info"></i>',
+												'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
+												'mp3': '<i class="fa fa-file-audio-o text-warning"></i>',
+												'jpg': '<i class="fa fa-file-photo-o text-danger"></i>', 
+												'gif': '<i class="fa fa-file-photo-o text-muted"></i>', 
+												'png': '<i class="fa fa-file-photo-o text-primary"></i>'    
+											},
+											previewFileExtSettings: {
+												'doc': function(ext) {
+													return ext.match(/(doc|docx)$/i);
+												},
+												'xls': function(ext) {
+													return ext.match(/(xls|xlsx)$/i);
+												},
+												'ppt': function(ext) {
+													return ext.match(/(ppt|pptx)$/i);
+												},
+												'zip': function(ext) {
+													return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+												},
+												'htm': function(ext) {
+													return ext.match(/(htm|html)$/i);
+												},
+												'txt': function(ext) {
+													return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
+												},
+												'mov': function(ext) {
+													return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+												},
+												'mp3': function(ext) {
+													return ext.match(/(mp3|wav)$/i);
+												},
+											}
+										}).on('filesorted', function(e, params) {
+											console.log('File sorted params', params);
+										}).on('fileuploaded', function(e, params) {
+											console.log('File uploaded params', params);
+										});
+									</script>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary">Lưu</button>
+							<button type="button" class="btn btn-default">Trở về</button>
+						</div>
+					</div>
+					<br>
+				</form>
+				<div class="col-sm-12">
+					<div id="TKKH" class="modal fade" role="dialog">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Tìm kiếm khách hàng</h4>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<nav class="navbar navbar-default">
+										<form class="navbar-left">
+												<div class="col-md-4">
+													<div class="form-group">
+														<input type="text" class="form-control" placeholder="Mã khách hàng">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<input type="text" class="form-control" placeholder="Tên khách hàng">
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+													</div>
+												</div>
+											</form>
+										</nav>
+									</div>
+									<table id="tableTKKH" class="table table-striped table-bordered">
+										<thead>
+										  <tr>
+											<th>Mã đơn vị</th>
+											<th>Tên</th>
+											<th>Địa chỉ</th>
+											<th>Điện thoại</th>
+											<th>Phiên bản</th>
+											<th>Hành động</th>
+										  </tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><a>cFI105</a></td>
+												<td>Một thành viên dịch vụ Công ích</td>
+												<td>65 Bà Hom, Phường 9, Quận Tản Đà, Hà Nội</td>
+												<td>1234</td>
+												<td>0</td>
+												<td class="text-center"><button class="btn btn-default" type="button">Chọn</button></td>
+											</tr>
+											<tr>
+												<td><a>cFI105</a></td>
+												<td>Một thành viên dịch vụ Công ích</td>
+												<td>65 Bà Hom, Phường 9, Quận Tản Đà, Hà Nội</td>
+												<td>1</td>
+												<td>1</td>
+												<td class="text-center"><button class="btn btn-default" type="button">Chọn</button></td>
+											</tr>
+											<tr>
+												<td><a>cAB106</a></td>
+												<td>Một thành viên dịch vụ Công cộng</td>
+												<td>27 Nguyễn Trãi, Phường 5, Quận 9, TP.HCM</td>
+												<td>012</td>
+												<td>0</td>
+												<td class="text-center"><button class="btn btn-default" type="button">Chọn</button></td>
+											</tr>
+											<tr>
+												<td><a>cAB106</a></td>
+												<td>Một thành viên dịch vụ Công cộng</td>
+												<td>27 Nguyễn Trãi, Phường 5, Quận 9, TP.HCM</td>
+												<td>2345</td>
+												<td>1</td>
+												<td class="text-center"><button class="btn btn-default" type="button">Chọn</button></td>
+											</tr>
+											<tr>
+												<td><a>cFX107</a></td>
+												<td>Một thành viên dịch vụ Công nghệ</td>
+												<td>90/5 Trương Định, Phường 1, Quận 3, TP.Vũng Tàu</td>
+												<td>9</td>
+												<td>0</td>
+												<td class="text-center"><button class="btn btn-default" type="button">Chọn</button></td>
+											</tr>
+											<tr>
+												<td><a>cFX107</a></td>
+												<td>Một thành viên dịch vụ Công nghệ</td>
+												<td>90/5 Trương Định, Phường 1, Quận 3, TP.Vũng Tàu</td>
+												<td>9876</td>
+												<td>1</td>
+												<td class="text-center"><button class="btn btn-default" type="button">Chọn</button></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="modal-footer">
+									<div class="text-center">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</fieldset>
+		</div>
+		<script src="../js/jquery-3.2.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+		<script src="../js/bootstrap-select.min.js"></script>
+
+        <script src="../js/fileinput.js"></script>
+		<script src="../js/locales/vi.js"></script>
+		<script src="../js/plugins/purify.min.js"></script>
+		<script src="../js/plugins/sortable.min.js"></script>
+		
+		<script src="../js/myJS.js"></script>
+		<script src="../js/i18n/defaults-vi_VN.js"></script>
+	</body>	
+		
+</html>
