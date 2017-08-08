@@ -67,7 +67,7 @@ public class Customers implements Serializable {
 	@Column(name = "datecreated", nullable = false)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime datecreated;
-	@Column(name = "lastupdate", nullable = true)
+	@Column(name = "lastupdate", nullable = false)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime lastupdate;
 	@Column(name = "website", length = 100, nullable = true)
@@ -91,6 +91,7 @@ public class Customers implements Serializable {
 		if (this.customerid == null) {
 			this.setLastupdate(null);
 			this.setDatecreated(new DateTime());
+			this.setLastupdate(new DateTime());
 			this.setStatus(true);
 			if (this.version == null)
 				this.setVersion(1);

@@ -25,7 +25,8 @@ public interface CustomerRepository extends JpaRepository<Customers, Long> {
 	@Query(" select c " + " from Customers c " 
 		+ " where cast(lower(c.name) as binary) like cast(lower(concat('%', :name, '%')) as binary) "
 		+ " and c.status = 1 "
-		+ " and c.version = (select max(cc.version) from Customers cc where cc.symbol = c.symbol and cc.serial = c.serial and cc.status = 1) ")
+		+ " and c.version = (select max(cc.version) from Customers cc where cc.symbol = c.symbol and cc.serial = c.serial and cc.status = 1) "
+		+ " order by c.lastupdate desc" )
 	public List<Customers> getListCustomers(@Param("name") String name);
 	
 
