@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />">
+<link rel="stylesheet" href="<c:url value="/resources/css/css.css" />" />
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/font-awesome.min.css" />" />
 <link rel="stylesheet"
@@ -14,8 +16,9 @@
 <%-- <link rel="stylesheet"
 	href="<c:url value="/resources/css/sweetalert2_1.css" />"> --%>
 <link rel="stylesheet"
-	href="<c:url value="/resources/css/light-bootstrap-dashboard.css" />">
-
+	href="<c:url value="/resources/css/light-bootstrap-dashboard_1.css" />">
+<link rel="stylesheet"
+	href="<c:url value="/resources/css/sweetalert2_1.css" />">
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/bootstrap-select.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/css/demo.css" />" />
@@ -55,11 +58,13 @@
 <script type="text/javascript"
 	src="<c:url value="/resources/js/bootstrap-checkbox-radio-switch-tags.js" />"></script>
 <script type="text/javascript"
-	src="<c:url value="/resources/js/sweetalert2.js" />"></script>
+	src="<c:url value="/resources/js/sweetalert2_1.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-select.min.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap-notify.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/myJS.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/i18n/defaults-vi_VN.js" />"></script>
+<script>var contextPath = "${pageContext.request.contextPath}";</script>
 
 

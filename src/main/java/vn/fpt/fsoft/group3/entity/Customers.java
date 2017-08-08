@@ -1,6 +1,7 @@
 package vn.fpt.fsoft.group3.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -16,81 +17,102 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import org.joda.time.DateTime;
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 
 @Entity
-@Table(name = "Customers", uniqueConstraints = {@UniqueConstraint(columnNames = {"required", "serial", "version"})})
+@Table(name = "Customers", uniqueConstraints = {@UniqueConstraint(columnNames = {"symbol", "serial", "version"})})
 public class Customers implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cid")
-	private Long cid;
-	@Column(name = "required", length = 4, nullable = false)
-	private String required;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "type", nullable = false)
+	@Column(name = "customerid")
+	private Long customerid;
+	@Column(name = "symbol", length = 4, nullable = false)
+	private String symbol;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "typeid", nullable = false)
 	private Types type;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "field", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "fieldid", nullable = false)
 	private Fields field;
 	@Column(name = "serial", length = 4, nullable = false)
 	private Integer serial;
-	@Column(name = "name", length = 100, nullable = false)
-	private String name;
-	@Column(name = "address", length = 200, nullable = true)
-	private String address;
-	@Column(name = "representative", length = 100, nullable = true)
-	private String representative;
-	@Column(name = "tax", length = 14, nullable = true)
-	private String tax;
-	@Column(name = "title", length = 50, nullable = true)
-	private String title;
-	@Column(name = "phone", length = 20, nullable = true)
-	private String phone;
-	@Column(name = "email", length = 100, nullable = true)
-	private String email;
-	@Column(name = "mobile", length = 20, nullable = true)
-	private String mobile;
-	@Column(name = "website", length = 100, nullable = true)
-	private String website;
-	@Column(name = "fax", length = 20, nullable = true)
-	private String fax;
-	@Column(name = "date", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
 	@Column(name = "version", nullable = false)
 	private Integer version;
+	@Column(name = "name", length = 100, nullable = false)
+	private String name;
+	@Column(name = "address", length = 200, nullable = false)
+	private String address;
+	@Column(name = "representatives", length = 100, nullable = false)
+	private String representatives;
+	@Column(name = "title", length = 50, nullable = false)
+	private String title;
+	@Column(name = "tax", length = 14, nullable = false)
+	private String tax;
+	@Column(name = "phone", length = 20, nullable = false)
+	private String phone;
+	@Column(name = "email", length = 100, nullable = false)
+	private String email;
 	@Column(name = "status", nullable = false)
 	private Boolean status;
+	@Column(name = "datecreated", nullable = false)
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime datecreated;
+	@Column(name = "lastupdate", nullable = true)
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime lastupdate;
+	@Column(name = "website", length = 100, nullable = true)
+	private String website;
+	@Column(name = "mobile", length = 20, nullable = true)
+	private String mobile;
+	@Column(name = "fax", length = 20, nullable = true)
+	private String fax;
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Orders> orders;
-
-	public Customers() {
-		super();
-		this.serial = 1;
-		this.version = 1;
-		this.status = true;
-		this.date = new Date(0);
+	
+	public int getSizeOrders() {
+		int sizeOrders = 0;
+		if (this.orders != null)
+			sizeOrders = this.orders.size();
+		return sizeOrders;
+	}
+	
+	public void setSomeAttr() {
+		if (this.customerid == null) {
+			this.setLastupdate(null);
+			this.setDatecreated(new DateTime());
+			this.setStatus(true);
+			if (this.version == null)
+				this.setVersion(1);
+		} else {
+			this.setLastupdate(new DateTime());
+		}
 	}
 
-	public Long getCid() {
-		return cid;
+	public Long getCustomerid() {
+		return customerid;
 	}
 
-	public void setCid(Long i) {
-		this.cid = i;
+	public void setCustomerid(Long customerid) {
+		this.customerid = customerid;
 	}
 
-	public String getRequired() {
-		return required;
+	public String getSymbol() {
+		return symbol;
 	}
 
-	public void setRequired(String required) {
-		this.required = required;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
 	public Types getType() {
@@ -117,6 +139,14 @@ public class Customers implements Serializable {
 		this.serial = serial;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -133,20 +163,12 @@ public class Customers implements Serializable {
 		this.address = address;
 	}
 
-	public String getRepresentative() {
-		return representative;
+	public String getRepresentatives() {
+		return representatives;
 	}
 
-	public void setRepresentative(String representative) {
-		this.representative = representative;
-	}
-
-	public String getTax() {
-		return tax;
-	}
-
-	public void setTax(String tax) {
-		this.tax = tax;
+	public void setRepresentatives(String representatives) {
+		this.representatives = representatives;
 	}
 
 	public String getTitle() {
@@ -155,6 +177,14 @@ public class Customers implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getTax() {
+		return tax;
+	}
+
+	public void setTax(String tax) {
+		this.tax = tax;
 	}
 
 	public String getPhone() {
@@ -173,12 +203,28 @@ public class Customers implements Serializable {
 		this.email = email;
 	}
 
-	public String getMobile() {
-		return mobile;
+	public Boolean getStatus() {
+		return status;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public DateTime getDatecreated() {
+		return datecreated;
+	}
+
+	public void setDatecreated(DateTime datecreated) {
+		this.datecreated = datecreated;
+	}
+
+	public DateTime getLastupdate() {
+		return lastupdate;
+	}
+
+	public void setLastupdate(DateTime lastupdate) {
+		this.lastupdate = lastupdate;
 	}
 
 	public String getWebsite() {
@@ -189,36 +235,20 @@ public class Customers implements Serializable {
 		this.website = website;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
 	public String getFax() {
 		return fax;
 	}
 
 	public void setFax(String fax) {
 		this.fax = fax;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
 	}
 
 	public Set<Orders> getOrders() {
@@ -232,5 +262,5 @@ public class Customers implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
 }

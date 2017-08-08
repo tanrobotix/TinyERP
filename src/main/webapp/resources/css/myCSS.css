@@ -1,13 +1,41 @@
+.swal2-buttonswrapper button {
+	margin: 0 5px;
+}
+
+.swal2-modal .swal2-icon.swal2-warning .body {
+	position: absolute;
+	width: 5px;
+	height: 47px;
+	left: 50%;
+	top: 10px;
+	border-radius: 2px;
+	margin-left: -2px;
+	background-color: #f8bb86;
+}
+
+.swal2-modal .swal2-icon.swal2-warning .dot {
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	margin-left: -3px;
+	left: 50%;
+	bottom: 10px;
+	background-color: #f8bb86;
+}
+
 .bootstrap-select.btn-group .dropdown-menu.inner {
 	position: relative;
 }
 
-.countrycode span.text{
+.countrycode span.text {
 	display: none;
 }
 
-.btn-group-vertical>.btn, .btn-group-vertical>.btn.active, .btn-group-vertical>.btn:active, .btn-group-vertical>.btn:focus, .btn-group-vertical>.btn:hover, 
-.btn-group>.btn, .btn-group>.btn.active, .btn-group>.btn:active, .btn-group>.btn:focus, .btn-group>.btn:hover {
+.btn-group-vertical>.btn, .btn-group-vertical>.btn.active,
+	.btn-group-vertical>.btn:active, .btn-group-vertical>.btn:focus,
+	.btn-group-vertical>.btn:hover, .btn-group>.btn, .btn-group>.btn.active,
+	.btn-group>.btn:active, .btn-group>.btn:focus, .btn-group>.btn:hover {
 	z-index: 3;
 }
 
@@ -16,28 +44,30 @@
 }
 
 .Ba-Ca-Vd {
-    background: url("../img/flags.png");
-    display: inline-block;
-    width: 16px;
-    height: 11px;
-    line-height: 11px;
-    background-position: 0 0;
-  	background-repeat: no-repeat;
+	background: url("../img/flags.png");
+	display: inline-block;
+	width: 16px;
+	height: 11px;
+	line-height: 11px;
+	background-position: 0 0;
+	background-repeat: no-repeat;
 }
+
 table.dataTable span.highlight {
 	background-color: #FFFF00;
 }
+
 table.dataTable span.column_highlight {
 	background-color: red;
 	border-radius: 0.28571429rem;
 }
-	
+
 #SuaDH label {
-	padding : 6px 0px 6px 0px;
+	padding: 6px 0px 6px 0px;
 }
 
 #QLDH label {
-	padding : 6px 0px 6px 0px;
+	padding: 6px 0px 6px 0px;
 }
 
 input[data-readonly] {
@@ -51,16 +81,16 @@ input[data-readonly] {
 
 #tableYCT tbody tr td:nth-child(1) {
 	text-align: center;
-	vertical-align : middle;
+	vertical-align: middle;
 }
 
-#tableYCT > tbody > tr > td:nth-child(2) input {
+#tableYCT>tbody>tr>td:nth-child(2) input {
 	padding: 8px;
 	border: none;
 	width: 100%;
 }
 
-#tableYCT > tbody > tr > td:nth-child(3) input {
+#tableYCT>tbody>tr>td:nth-child(3) input {
 	padding: 8px;
 	border: none;
 	width: 100%;
@@ -71,82 +101,87 @@ input[data-readonly] {
 }
 
 .btn-file {
-    position: relative;
-    overflow: hidden;
+	position: relative;
+	overflow: hidden;
 }
+
 .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
 }
 /* CSS used here will be applied after bootstrap.css */
 .modal-header-success {
-    color:#fff;
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #5cb85c;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-     border-top-left-radius: 5px;
-     border-top-right-radius: 5px;
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #5cb85c;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
+
 .modal-header-warning {
-	color:#fff;
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #f0ad4e;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-     border-top-left-radius: 5px;
-     border-top-right-radius: 5px;
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #f0ad4e;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
+
 .modal-header-danger {
-	color:#fff;
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #d9534f;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-     border-top-left-radius: 5px;
-     border-top-right-radius: 5px;
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #d9534f;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
+
 .modal-header-info {
-    color:#fff;
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #5bc0de;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-     border-top-left-radius: 5px;
-     border-top-right-radius: 5px;
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #5bc0de;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
+
 .modal-header-primary {
-	color:#fff;
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #428bca;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-     border-top-left-radius: 5px;
-     border-top-right-radius: 5px;
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #428bca;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }

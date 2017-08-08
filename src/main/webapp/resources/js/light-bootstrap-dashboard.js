@@ -101,6 +101,7 @@ $(document).ready(function(){
 // activate mobile menus when the windows is resized
 $(window).resize(function(){
     lbd.initSidebarsCheck();
+    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('update');
 });
 
 
@@ -161,7 +162,7 @@ lbd = {
 				$('.switch-sidebar-mini div').removeClass('switch-on switch-animate').addClass('switch-off switch-animate');
                 lbd.misc.sidebar_mini_active = false;
                 if(isWindows){
-                    $('.sidebar .sidebar-wrapper').perfectScrollbar();
+                    $('.sidebar .sidebar-wrapperl').perfectScrollbar();
                 }	
             }else{
 

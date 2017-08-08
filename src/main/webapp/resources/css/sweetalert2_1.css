@@ -27,7 +27,7 @@ body.swal2-iosfix {
   .swal2-container.swal2-shown {
     background-color: rgba(0, 0, 0, 0.4); }
 
-.swal2-modal {
+/* .swal2-modal {
   background-color: #fff;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border-radius: 5px;
@@ -39,12 +39,27 @@ body.swal2-iosfix {
   overflow-y: auto;
   display: none;
   position: relative;
-  max-width: 100%; }
+  max-width: 100%; } */ 
+  .swal2-modal {
+  background-color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-top: -200px;
+  max-height: 90%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+  z-index: 2000; } /* huydh */
   .swal2-modal:focus {
     outline: none; }
   .swal2-modal.swal2-loading {
     overflow-y: hidden; }
-  .swal2-modal .swal2-title {
+  /* .swal2-modal .swal2-title {
     color: #595959;
     font-size: 30px;
     text-align: center;
@@ -54,9 +69,18 @@ body.swal2-iosfix {
     margin: 0 0 .4em;
     padding: 0;
     display: block;
-    word-wrap: break-word; }
+    word-wrap: break-word; } */
+    .swal2-modal .swal2-title {
+    color: #575757;
+    text-align: center;
+    text-transform: none;
+    position: relative;
+    padding: 0;
+    display: block; } /* huydh */
+  /* .swal2-modal .swal2-buttonswrapper {
+    margin-top: 15px; } */
   .swal2-modal .swal2-buttonswrapper {
-    margin-top: 15px; }
+    margin-top: 45px; } /*huydh*/
     .swal2-modal .swal2-buttonswrapper:not(.swal2-loading) .swal2-styled[disabled] {
       opacity: .4;
       cursor: no-drop; }
@@ -112,6 +136,7 @@ body.swal2-iosfix {
     margin: 20px auto;
     max-width: 100%; }
   .swal2-modal .swal2-close {
+  	outline: none; /* huydh */
     background: transparent;
     border: 0;
     margin: 0;
@@ -129,7 +154,8 @@ body.swal2-iosfix {
     -webkit-transition: color .1s ease;
     transition: color .1s ease; }
     .swal2-modal .swal2-close:hover {
-      color: #d55; }
+      /* color: #d55; */
+      color: #FB404B; /* huydh */ }
   .swal2-modal > .swal2-input,
   .swal2-modal > .swal2-file,
   .swal2-modal > .swal2-textarea,
@@ -137,7 +163,8 @@ body.swal2-iosfix {
   .swal2-modal > .swal2-radio,
   .swal2-modal > .swal2-checkbox {
     display: none; }
-  .swal2-modal .swal2-content {
+    
+  /* .swal2-modal .swal2-content {
     font-size: 18px;
     text-align: center;
     font-weight: 300;
@@ -147,7 +174,15 @@ body.swal2-iosfix {
     padding: 0;
     line-height: normal;
     color: #545454;
-    word-wrap: break-word; }
+    word-wrap: break-word; } */
+    .swal2-modal .swal2-content {
+    text-align: center;
+    position: relative;
+    float: none;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5; } /* huydh */
   .swal2-modal .swal2-input,
   .swal2-modal .swal2-file,
   .swal2-modal .swal2-textarea,
@@ -314,7 +349,7 @@ body.swal2-iosfix {
       position: absolute;
       height: 5px;
       width: 47px;
-      background-color: #f27474;
+      background-color: #FB404B;
       display: block;
       top: 37px;
       border-radius: 2px; }
@@ -326,13 +361,16 @@ body.swal2-iosfix {
         -webkit-transform: rotate(-45deg);
                 transform: rotate(-45deg);
         right: 16px; }
-  .swal2-icon.swal2-warning {
+  /* .swal2-icon.swal2-warning {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #f8bb86;
     border-color: #facea8;
     font-size: 60px;
     line-height: 80px;
-    text-align: center; }
+    text-align: center; } */
+  .swal2-icon.swal2-warning {
+	  border-color: #f8bb86;
+ } /*huydh*/
   .swal2-icon.swal2-info {
     font-family: 'Open Sans', sans-serif;
     color: #3fc3ee;
@@ -394,7 +432,7 @@ body.swal2-iosfix {
               transform: rotate(-45deg); }
     .swal2-icon.swal2-success [class^='swal2-success-line'] {
       height: 5px;
-      background-color: #a5dc86;
+      background-color: #87CB16;
       display: block;
       border-radius: 2px;
       position: absolute;

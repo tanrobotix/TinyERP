@@ -1,5 +1,6 @@
 package vn.fpt.fsoft.group3.repository;
 
+import vn.fpt.fsoft.group3.entity.Customers;
 import vn.fpt.fsoft.group3.entity.Fields;
 import vn.fpt.fsoft.group3.entity.Types;
 
@@ -16,4 +17,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TypeRepository extends JpaRepository<Types, Integer>{
     
 	public Types findByValue(String value);
+
 }

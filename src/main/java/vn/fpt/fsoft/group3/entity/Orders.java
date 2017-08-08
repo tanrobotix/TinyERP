@@ -18,29 +18,29 @@ import javax.persistence.TemporalType;
 @Table(name = "Orders")
 public class Orders implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	@Id
-	@Column(name = "oid", length = 17, nullable = false)
-	private String oid;
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "cid", nullable = true)
-	private Customers customer;
+	@Column(name = "orderid", length = 17, nullable = false)
+	private String orderid;
 	@Column(name = "name", length = 100, nullable = false)
 	private String name;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "sdate", nullable = false)
+	@Column(name = "startdate", nullable = false)
 	private Date sdate;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "fdate")
+	@Column(name = "finishdate")
 	private Date fdate;
 	@Column(name = "status", nullable = false)
 	private Boolean status;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "customerid", nullable = true)
+	private Customers customer;
 	
-	public String getOid() {
-		return oid;
+	public String getOrderid() {
+		return orderid;
 	}
-	public void setOid(String oid) {
-		this.oid = oid;
+	public void setOrderid(String orderid) {
+		this.orderid = orderid;
 	}
 	public Customers getCustomer() {
 		return customer;
@@ -75,4 +75,5 @@ public class Orders implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 }

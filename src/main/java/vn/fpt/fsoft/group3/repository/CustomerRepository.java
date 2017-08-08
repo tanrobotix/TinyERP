@@ -9,6 +9,7 @@ import vn.fpt.fsoft.group3.entity.Customers;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,25 +17,30 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface CustomerRepository extends JpaRepository<Customers, Long> {
-	@Query(" select c " + " from Customers c "
-			+ " where cast(lower(c.name) as binary) like cast(lower(:name) as binary) and status = 1")
-	public List<Customers> findByNameUTF8(@Param("name") String name);
-
-	@Query(" select max(c.serial) from Customers c where c.required = :required")
-	public Integer getMaxSerial(@Param("required") String required);
+	/*@Query(" select c " + " from Customers c "
+			+ " where cast(lower(c.name) as binary) like cast(lower(concat('%', :name, '%')) as binary) and c.status = 1")
+	public List<Customers> findByAndSort(@Param("name") String name, Sort sort);*/
 	
-	public List<Customers> findByRequiredAndSerial(@Param("required") String required, @Param("serial") Integer serial);
+	
+	@Query(" select c " + " from Customers c " 
+		+ " where cast(lower(c.name) as binary) like cast(lower(concat('%', :name, '%')) as binary) "
+		+ " and c.status = 1 "
+		+ " and c.version = (select max(cc.version) from Customers cc where cc.symbol = c.symbol and cc.serial = c.serial and cc.status = 1) ")
+	public List<Customers> getListCustomers(@Param("name") String name);
+	
+
+	@Query(" select max(c.serial) from Customers c where cast(c.symbol as binary) = cast(:symbol as binary)")
+	public Integer getMaxSerialBySymbol(@Param("symbol") String symbol);
+	
+	public List<Customers> findBySymbolAndSerial(@Param("symbol") String symbol, @Param("serial") Integer serial);
 	
 	public List<Customers> findByStatus(@Param("status") Boolean status);
-	/*public Customers findTopByRequiredBySerialDesc(String required);*/
-	/* public List<Customers> findByNameIgnoreCaseContaining(String name); */
-
-	/*
-	 * @Modifying
-	 * 
-	 * @Transactional
-	 * 
-	 * @Query("delete from Contact c where c.id = :id") public void
-	 * deleteContact(@Param("id") Long id);
-	 */
+	
+	/*public Customers findTopByRequiredBySerialDesc(String required);
+	public List<Customers> findByNameIgnoreCaseContaining(String name);
+	@Modifying 
+	@Transactional
+	@Query("delete from Contact c where c.id = :id") public void
+	deleteContact(@Param("id") Long id);*/
+	 
 }

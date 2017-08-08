@@ -17,22 +17,26 @@ var defaultParams = {
   customClass: '',
   target: 'body',
   animation: true,
-  allowOutsideClick: true,
+	allowOutsideClick : false,
+	allowEnterKey : false,
+	allowEscapeKey : false, //huydh
+  /*allowOutsideClick: true,
   allowEscapeKey: true,
-  allowEnterKey: true,
+  allowEnterKey: true,*/
   showConfirmButton: true,
   showCancelButton: false,
   preConfirm: null,
   confirmButtonText: 'OK',
   confirmButtonColor: '#3085d6',
-  confirmButtonClass: null,
+  confirmButtonClass: 'btn btn-info btn-fill', //huydh
   cancelButtonText: 'Cancel',
   cancelButtonColor: '#aaa',
-  cancelButtonClass: null,
-  buttonsStyling: true,
+  cancelButtonClass: 'btn btn-danger btn-fill', //huydh
+  buttonsStyling: false, //huydh
   reverseButtons: false,
   focusCancel: false,
-  showCloseButton: false,
+  /*showCloseButton: false,*/
+  showCloseButton: true, //huydh
   showLoaderOnConfirm: false,
   imageUrl: null,
   imageWidth: null,
@@ -187,7 +191,7 @@ var states = {
  * Manipulate DOM
  */
 
-var sweetHTML = ('\n <div role="dialog" aria-labelledby="' + swalClasses.title + '" aria-describedby="' + swalClasses.content + '" class="' + swalClasses.modal + '" tabindex="-1">\n   <ul class="' + swalClasses.progresssteps + '"></ul>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.error + '">\n     <span class="swal2-x-mark"><span class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span>\n   </div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.question + '">?</div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.warning + '">!</div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.info + '">i</div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.success + '">\n     <div class="swal2-success-circular-line-left"></div>\n     <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span>\n     <div class="swal2-success-ring"></div> <div class="swal2-success-fix"></div>\n     <div class="swal2-success-circular-line-right"></div>\n   </div>\n   <img class="' + swalClasses.image + '" />\n   <h2 class="' + swalClasses.title + '" id="' + swalClasses.title + '"></h2>\n   <div id="' + swalClasses.content + '" class="' + swalClasses.content + '"></div>\n   <input class="' + swalClasses.input + '" />\n   <input type="file" class="' + swalClasses.file + '" />\n   <div class="' + swalClasses.range + '">\n     <output></output>\n     <input type="range" />\n   </div>\n   <select class="' + swalClasses.select + '"></select>\n   <div class="' + swalClasses.radio + '"></div>\n   <label for="' + swalClasses.checkbox + '" class="' + swalClasses.checkbox + '">\n     <input type="checkbox" />\n   </label>\n   <textarea class="' + swalClasses.textarea + '"></textarea>\n   <div class="' + swalClasses.validationerror + '"></div>\n   <div class="' + swalClasses.buttonswrapper + '">\n     <button type="button" class="' + swalClasses.confirm + '">OK</button>\n     <button type="button" class="' + swalClasses.cancel + '">Cancel</button>\n   </div>\n   <button type="button" class="' + swalClasses.close + '" aria-label="Close this dialog">\xD7</button>\n </div>\n').replace(/(^|\n)\s*/g, '');
+var sweetHTML = ('\n <div role="dialog" aria-labelledby="' + swalClasses.title + '" aria-describedby="' + swalClasses.content + '" class="' + swalClasses.modal + '" tabindex="-1">\n   <ul class="' + swalClasses.progresssteps + '"></ul>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.error + '">\n     <span class="swal2-x-mark"><span class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span>\n   </div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.question + '">?</div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.warning + '"> <span class="body"></span> <span class="dot"></span> </div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.info + '">i</div>\n   <div class="' + swalClasses.icon + ' ' + iconTypes.success + '">\n     <div class="swal2-success-circular-line-left"></div>\n     <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span>\n     <div class="swal2-success-ring"></div> <div class="swal2-success-fix"></div>\n     <div class="swal2-success-circular-line-right"></div>\n   </div>\n   <img class="' + swalClasses.image + '" />\n   <h2 class="' + swalClasses.title + '" id="' + swalClasses.title + '"></h2>\n   <div id="' + swalClasses.content + '" class="' + swalClasses.content + '"></div>\n   <input class="' + swalClasses.input + '" />\n   <input type="file" class="' + swalClasses.file + '" />\n   <div class="' + swalClasses.range + '">\n     <output></output>\n     <input type="range" />\n   </div>\n   <select class="' + swalClasses.select + '"></select>\n   <div class="' + swalClasses.radio + '"></div>\n   <label for="' + swalClasses.checkbox + '" class="' + swalClasses.checkbox + '">\n     <input type="checkbox" />\n   </label>\n   <textarea class="' + swalClasses.textarea + '"></textarea>\n   <div class="' + swalClasses.validationerror + '"></div>\n   <div class="' + swalClasses.buttonswrapper + '">\n     <button type="button" class="' + swalClasses.confirm + '">OK</button>\n     <button type="button" class="' + swalClasses.cancel + '">Cancel</button>\n   </div>\n   <button type="button" class="' + swalClasses.close + '" aria-label="Close this dialog">\xD7</button>\n </div>\n').replace(/(^|\n)\s*/g, '');
 
 var getContainer = function getContainer() {
   return document.body.querySelector('.' + swalClasses.container);
@@ -580,7 +584,6 @@ var setParameters = function setParameters(params) {
     }
     var icon = modal.querySelector('.' + swalClasses.icon + '.' + iconTypes[params.type]);
     show(icon);
-
     // Animate icon
     if (params.animation) {
       switch (params.type) {
@@ -593,6 +596,11 @@ var setParameters = function setParameters(params) {
           addClass(icon, 'swal2-animate-error-icon');
           addClass(icon.querySelector('.swal2-x-mark'), 'swal2-animate-x-mark');
           break;
+	      case 'warning':
+	        addClass(icon, 'pulse-warning');
+	        addClass(icon.querySelector('.body'), 'pulse-warning-ins');
+	        addClass(icon.querySelector('.dot'), 'pulse-warning-ins');
+	        break;
         default:
           break;
       }
@@ -1225,6 +1233,20 @@ var sweetAlert = function sweetAlert() {
       }
     };
 
+    //huydh
+    modal.style.marginLeft = -params.width / 2 + 'px';
+    var getTopMargin = function(elem) {
+        elem.style.left = '-9999px';
+        elem.style.display = 'block';
+
+        var height = elem.clientHeight;
+        var padding = parseInt(getComputedStyle(elem).getPropertyValue('padding'), 10);
+
+        elem.style.left = '';
+        elem.style.display = 'none';
+        return ('-' + parseInt(height / 2 + padding) + 'px');
+      };
+      
     // Set modal min-height to disable scrolling inside the modal
     sweetAlert.recalculateHeight = debounce(function () {
       var modal = getModal();
@@ -1234,9 +1256,11 @@ var sweetAlert = function sweetAlert() {
       var prevState = modal.style.display;
       modal.style.minHeight = '';
       show(modal);
-      modal.style.minHeight = modal.scrollHeight + 1 + 'px';
+      //modal.style.minHeight = modal.scrollHeight + 1 + 'px';
+      modal.style.marginTop = getTopMargin(modal);//huydh
       modal.style.display = prevState;
     }, 50);
+    
 
     // Show block with validation error
     sweetAlert.showValidationError = function (error) {
