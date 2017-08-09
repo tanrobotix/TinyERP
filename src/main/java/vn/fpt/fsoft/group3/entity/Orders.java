@@ -41,6 +41,8 @@ public class Orders implements Serializable {
 	private Integer serial;
 	@Column(name = "status", nullable = false)
 	private Boolean status;
+	@Column(name = "mode", nullable = false)
+	private Integer mode;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customerid", nullable = false)
 	private Customers customer;
@@ -86,6 +88,12 @@ public class Orders implements Serializable {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	public Integer getMode() {
+		return mode;
+	}
+	public void setMode(Integer mode) {
+		this.mode = mode;
 	}
 	public Customers getCustomer() {
 		return customer;

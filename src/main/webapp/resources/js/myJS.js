@@ -129,6 +129,9 @@ $(function() {
 	$('#searchCustomer').click(function() {
 		tableCustomers.ajax.reload();
 	});
+	$('#searchOrders').click(function() {
+		tableOrders.ajax.reload();
+	});
 });
 
 function formatSerial(serial) {
@@ -209,6 +212,57 @@ function deleteCustomer(customerid) {
 			/* timer: reloadInSeconds*1000 + 100, */
 		}).then(function () {
 			tableCustomers.ajax.reload();
+		})/*
+			 * , function (dismiss) { if (dismiss === 'timer') { } })
+			 * setInterval(function() {
+			 * $('.reverse-countdown').html(--reloadInSeconds); }, 1000);
+			 */
+				  
+	}).catch(swal.noop)
+}
+
+function deleteOrder(orderid) {
+	swal(
+			{
+				title : "Bạn có chắc?",
+				text : "Xóa thông tin đơn hàng sẽ xóa các thông tin liên quan đến khách hàng!",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonText : "Vâng, xóa nó! ",
+				cancelButtonText : "Không, hủy xóa!",
+				showLoaderOnConfirm : true,
+				preConfirm : function() {
+					return new Promise(function(resolve) {
+						setTimeout(function() {
+						 var ajax = $.ajax({
+							type : "POST",
+							url : contextPath + '/DeleteOrder',
+							data : {
+								"orderid" : orderid
+							}
+						});
+						 	ajax.done(function() {
+								resolve();
+							});
+						 	ajax.fail(function() {
+								showAlertError();
+							});
+						}, 2000)
+					})
+				}
+			}).then(function() {
+				/* var reloadInSeconds = 3; */
+		swal({
+			type : 'success',
+			/*
+			 * html: 'Thông báo sẽ tự động đóng sau <span class="text-danger
+			 * reverse-countdown">' + reloadInSeconds + '</span> giây :3.',
+			 */
+			text : 'Xóa thông tin đơn hàng thành công :3 !',
+			title : 'Xóa thành công!',
+			/* timer: reloadInSeconds*1000 + 100, */
+		}).then(function () {
+			tableOrders.ajax.reload();
 		})/*
 			 * , function (dismiss) { if (dismiss === 'timer') { } })
 			 * setInterval(function() {

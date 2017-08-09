@@ -87,14 +87,15 @@
 												<a href="<c:url value="AllInOne?mode=save" />"
 													class="btn btn-success btn-sm">Thêm</a>
 											</div>
-											<div class="input-group input-group-sm">
+											<div class="form-group">
 												<input id="name" name="name" type="text"
-													class="form-control" placeholder="Tìm kiếm theo tên...">
-												<span class="input-group-btn">
-													<button id="searchCustomer" class="btn btn-primary">
-														<i class="fa fa-search"></i>
-													</button>
-												</span>
+													class="form-control input-sm"
+													placeholder="Tìm kiếm theo tên...">
+											</div>
+											<div class="form-group">
+												<button id="searchCustomer" class="btn btn-primary btn-sm">
+													<i class="fa fa-search"></i>
+												</button>
 											</div>
 										</div>
 									</div>
@@ -128,17 +129,19 @@
 	<%@include file="includes/FixedPlugin.jsp"%>
 	<script>
 		$.fn.dataTable.ext.errMode = 'none';
-		var tableCustomers = $('#tableCustomers').on( 'error.dt', function ( e, settings, techNote, message ) {
-			showAlertError();
-	    } ).DataTable(
+		var tableCustomers = $('#tableCustomers')
+				.on('error.dt', function(e, settings, techNote, message) {
+					showAlertError();
+				})
+				.DataTable(
 						{
 							"processing" : true,
 							"ajax" : {
 								"url" : contextPath + "/GetListCustomers",
 								"dataSrc" : "",
-								"data" : function ( d ) {
-							        d.name = $('#name').val();
-							    }
+								"data" : function(d) {
+									d.name = $('#name').val();
+								}
 							},
 							"columns" : [
 									{

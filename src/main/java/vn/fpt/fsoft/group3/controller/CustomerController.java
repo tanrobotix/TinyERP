@@ -87,8 +87,8 @@ public class CustomerController {
 	@RequestMapping(value = "/GetListHistoryCustomer", method = RequestMethod.GET)
 	public @ResponseBody List<Customers> getListHistoryCustomer(@RequestParam(value = "customercode", required = true) String customercode) {
 		
-		return customerRepository.findByAndSort(customercode, new Sort(Sort.Direction.DESC,"version"));
-		
+		/*return customerRepository.findByAndSort(customercode, new Sort(Sort.Direction.DESC,"version"));*/
+		return customerRepository.findByCustomercodeOrderByVersionDesc(customercode);
 	}
 	
 	@RequestMapping(value = "/DeleteCustomer", method = RequestMethod.POST)
@@ -156,10 +156,13 @@ public class CustomerController {
 		 * serial = Integer.toString(customerRepository.getMaxSerial(required) + 1);
 		 * String format = ("0000" + serial).substring(serial.length()); return format;
 		 */
-
-		Integer serial = 0;
-		if (customerRepository.getMaxSerialBySymbol(symbol) != null) {
+		/*if (customerRepository.getMaxSerialBySymbol(symbol) != null) {
 			serial = customerRepository.getMaxSerialBySymbol(symbol);
+		}*/
+		Integer serial = 0;
+		Customers temp = customerRepository.findTopBySymbolOrderBySerialDesc(symbol);
+		if (temp != null) {
+			serial = temp.getSerial();
 		}
 		/*String.format("%04d", serial)*/
 		return serial;

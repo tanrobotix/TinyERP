@@ -31,18 +31,26 @@ public class OrderController {
 	public String orderManagement(Model model, @RequestParam(value = "ordercode", required = false) String ordercode,
 			@RequestParam(value = "customercode", required = false) String customercode) {
 
-		model.addAttribute("orderid", ordercode);
-		model.addAttribute("customerid", customercode);
+		model.addAttribute("ordercode", ordercode);
+		model.addAttribute("customercode", customercode);
 		return "OrderManagement";
 	}
 
 	@RequestMapping(value = "/GetListOrders", method = RequestMethod.GET)
 	public @ResponseBody List<Orders> getListCustomers(
-			@RequestParam(value = "customercode", required = false) String customercode,
-			@RequestParam(value = "ordercode", required = false) String ordercode) {
+			@RequestParam(value = "ordercode", defaultValue="%") String ordercode,
+			@RequestParam(value = "customercode", defaultValue="%") String customercode) {
 
-		/*return orderRepository.getListOrders(customercode, ordercode);*/
-		return orderRepository.findAll();
+		return orderRepository.findByOrdercodeLikeAndCustomerCustomercodeLikeAndModeAndCustomerMode(ordercode, customercode, 1, 1);
+	}
+	
+	@RequestMapping(value = "/DeleteOrder", method = RequestMethod.POST)
+	public @ResponseBody void deleteOrder(@RequestParam(value = "orderid", required = true) Long orderid) {
+		
+		Orders order = orderRepository.findOne(orderid);
+		order.setMode(0);
+		orderRepository.save(order);
+		
 	}
 
 }

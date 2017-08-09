@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
-public interface OrderRepository extends JpaRepository<Orders, String>{
+public interface OrderRepository extends JpaRepository<Orders, Long>{
 /*    @Query(" select c "
     		+ " from Customers c "
     		+ " where cast(lower(c.name) as binary) like cast(lower(:name) as binary)")
@@ -29,4 +29,9 @@ public interface OrderRepository extends JpaRepository<Orders, String>{
     @Transactional
     @Query("delete from Contact c where c.id = :id")
     public void deleteContact(@Param("id") Long id);*/
+	
+	/*@Query(" select o " + " from Orders o " 
+    		+ " where o.ordercode like ?1 "
+    		+ " and o.customer.customercode like ?2 " )*/
+	public List<Orders> findByOrdercodeLikeAndCustomerCustomercodeLikeAndModeAndCustomerMode(String ordercode, String customercode, Integer mode, Integer customermode);
 }

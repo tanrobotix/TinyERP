@@ -30,11 +30,15 @@ public interface CustomerRepository extends JpaRepository<Customers, Long> {
 	public List<Customers> getListCustomers(@Param("name") String name);
 	
 
-	@Query(" select max(c.serial) from Customers c where cast(c.symbol as binary) = cast(:symbol as binary)")
-	public Integer getMaxSerialBySymbol(@Param("symbol") String symbol);
+	/*@Query(" select max(c.serial) from Customers c where cast(c.symbol as binary) = cast(:symbol as binary)")
+	public Integer getMaxSerialBySymbol(@Param("symbol") String symbol);*/
 	
-	@Query("select c from Customers c where c.customercode = ?1")
-	public List<Customers> findByAndSort(String customercode, Sort sort);
+	public Customers findTopBySymbolOrderBySerialDesc(String symbol);
+	
+	/*@Query("select c from Customers c where c.customercode = ?1")
+	public List<Customers> findByAndSort(String customercode, Sort sort);*/
+	
+	public List<Customers> findByCustomercodeOrderByVersionDesc(String customercode);
 	
 	public List<Customers> findByMode(@Param("mode") Integer mode);
 
