@@ -47,33 +47,25 @@ $(window).on('load', function updateT(){
 	var t = setTimeout(updateT, 1000);
 });
 
-$(window).on('load', function lyrics() {
-	/*var date = new Date();
-	var seconds = date.getSeconds();*/
+/*$(window).on('load', function lyrics() {
 			switch(seconds) {
 				case 1: 
 					 $("#lyrics").html("Xi, xà bệt khi cha ché vun ra tô mi rành đố tế");
-					/*alert(1);*/
 					break;
 				case 2: 
 					 $("#lyrics").html("Ten gồ khe vài la gồn tia gố ôi");
-					/*alert(2);*/
 					break;
 				case 3: 
 					 $("#lyrics").html("Vi, kề tù mi la đá da sta va da màm đô mén em. ");
-					/*alert(3);*/
 					break;
 				case 4: 
 					 $("#lyrics").html("Moe xà rme cà mi nồ kê dố voi ");
-					/*alert(4);*/
 					break;
 				case 5: 
 					 $("#lyrics").html("Tu, tòe rà xè lima lì đa xồ dén mê tà ");
-					/*alert(5);*/
 					break;
 				case 6: 
 					 $("#lyrics").html("Mề gồ da xê cóng mê phói da r-mân gối plan ");
-					/*alert(6);*/
 					break;
 				case 7: 
 					 $("#lyrics").html("Sừ rù cù pình xa lùa xe xì le đén pú xô ");
@@ -84,8 +76,8 @@ $(window).on('load', function lyrics() {
 				case 9: 
 					 $("#lyrics").html("Sừ rù cù pình xa lùa xe xì le đén pú xô ");
 					 break;
-					/*alert(7);*/
+				
 				default: break;
 				}
-				/*var t = setTimeout(lyrics, 1000);*/
-});
+				
+});*/
