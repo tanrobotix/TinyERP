@@ -24,8 +24,8 @@ public interface CustomerRepository extends JpaRepository<Customers, Long> {
 	
 	@Query(" select c " + " from Customers c " 
 		+ " where cast(lower(c.name) as binary) like cast(lower(concat('%', :name, '%')) as binary) "
-		+ " and c.status = 1 "
-		+ " and c.version = (select max(cc.version) from Customers cc where cc.symbol = c.symbol and cc.serial = c.serial and cc.status = 1) "
+		+ " and c.mode = 1 "
+		+ " and c.version = (select max(cc.version) from Customers cc where cc.symbol = c.symbol and cc.serial = c.serial and cc.mode = 1) "
 		+ " order by c.lastupdate desc" )
 	public List<Customers> getListCustomers(@Param("name") String name);
 	
@@ -33,9 +33,11 @@ public interface CustomerRepository extends JpaRepository<Customers, Long> {
 	@Query(" select max(c.serial) from Customers c where cast(c.symbol as binary) = cast(:symbol as binary)")
 	public Integer getMaxSerialBySymbol(@Param("symbol") String symbol);
 	
-	public List<Customers> findBySymbolAndSerial(@Param("symbol") String symbol, @Param("serial") Integer serial);
+	@Query("select c from Customers c where c.customercode = ?1")
+	public List<Customers> findByAndSort(String customercode, Sort sort);
 	
-	public List<Customers> findByStatus(@Param("status") Boolean status);
+	public List<Customers> findByMode(@Param("mode") Integer mode);
+
 	
 	/*public Customers findTopByRequiredBySerialDesc(String required);
 	public List<Customers> findByNameIgnoreCaseContaining(String name);

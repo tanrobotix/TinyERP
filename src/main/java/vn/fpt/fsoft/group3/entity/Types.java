@@ -30,20 +30,18 @@ public class Types implements Serializable {
 	private static final long serialVersionUID = 4L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "typeid")
-	private Integer typeid;
+	private String typeid;
 	@Column(name = "name", length = 100, nullable = false)
 	private String name;
-	@Column(name = "value", length = 2, nullable = false, unique=true)
-	private String value;
 	@JsonIgnore
 	@OneToMany(mappedBy = "type", fetch = FetchType.EAGER)
 	private Set<Customers> customers;
-	public Integer getTypeid() {
+	
+	public String getTypeid() {
 		return typeid;
 	}
-	public void setTypeid(Integer typeid) {
+	public void setTypeid(String typeid) {
 		this.typeid = typeid;
 	}
 	public String getName() {
@@ -51,12 +49,6 @@ public class Types implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
 	}
 	public Set<Customers> getCustomers() {
 		return customers;

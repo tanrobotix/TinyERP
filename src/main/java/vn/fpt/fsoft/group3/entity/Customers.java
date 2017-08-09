@@ -1,7 +1,7 @@
 package vn.fpt.fsoft.group3.entity;
 
 import java.io.Serializable;
-
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -27,7 +27,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 
 @Entity
-@Table(name = "Customers", uniqueConstraints = {@UniqueConstraint(columnNames = {"symbol", "serial", "version"})})
+@Table(name = "Customers", uniqueConstraints = {@UniqueConstraint(columnNames = {"customercode", "version"})})
 public class Customers implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,6 +36,8 @@ public class Customers implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customerid")
 	private Long customerid;
+	@Column(name = "customercode",  nullable = false)
+	private String customercode;
 	@Column(name = "symbol", length = 4, nullable = false)
 	private String symbol;
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -56,14 +58,14 @@ public class Customers implements Serializable {
 	private String representatives;
 	@Column(name = "title", length = 50, nullable = false)
 	private String title;
-	@Column(name = "tax", length = 14, nullable = false)
+	@Column(name = "tax", length = 13, nullable = false)
 	private String tax;
 	@Column(name = "phone", length = 20, nullable = false)
 	private String phone;
 	@Column(name = "email", length = 100, nullable = false)
 	private String email;
-	@Column(name = "status", nullable = false)
-	private Boolean status;
+	@Column(name = "mode", nullable = false)
+	private Integer mode;
 	@Column(name = "datecreated", nullable = false)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime datecreated;
@@ -91,13 +93,23 @@ public class Customers implements Serializable {
 		if (this.customerid == null) {
 			this.setLastupdate(null);
 			this.setDatecreated(new DateTime());
-			this.setLastupdate(new DateTime());
-			this.setStatus(true);
-			if (this.version == null)
+			this.setLastupdate(this.getDatecreated());
+			this.setMode(1);
+			if (this.version == null) {
 				this.setVersion(1);
+			}
 		} else {
 			this.setLastupdate(new DateTime());
 		}
+		this.customercode = this.symbol + this.type.getTypeid() + this.field.getFieldid() + String.format("%04d", this.serial);
+	}
+
+	public String getCustomercode() {
+		return customercode;
+	}
+
+	public void setCustomercode(String customercode) {
+		this.customercode = customercode;
 	}
 
 	public Long getCustomerid() {
@@ -204,12 +216,12 @@ public class Customers implements Serializable {
 		this.email = email;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	public Integer getMode() {
+		return mode;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setMode(Integer mode) {
+		this.mode = mode;
 	}
 
 	public DateTime getDatecreated() {

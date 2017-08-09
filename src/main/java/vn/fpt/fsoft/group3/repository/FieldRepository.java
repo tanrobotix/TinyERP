@@ -12,8 +12,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public interface FieldRepository extends JpaRepository<Fields, Integer>{
-	
-	public Fields findByValue(String value);
+public interface FieldRepository extends JpaRepository<Fields, String>{
 	
 }

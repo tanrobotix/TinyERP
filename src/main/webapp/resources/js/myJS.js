@@ -1,5 +1,5 @@
 $(function() {
-	$('#tableDSDH').DataTable({
+/*	$('#tableDSDH').DataTable({
 		"pagingType" : "full_numbers_no_ellipses",
 		searchHighlight : true,
 		"language" : {
@@ -25,7 +25,7 @@ $(function() {
 				"sSortDescending" : ": Kích hoạt hoạt để sắp xếp cột giảm dần"
 			}
 		}
-	});
+	});*/
 	$('#tableTKKH').DataTable({
 		"language" : {
 			"sEmptyTable" : "Không có dữ liệu trong bảng",
@@ -124,7 +124,12 @@ $(function() {
  * 
  * }).catch(swal.noop) }
  */
- 
+
+$(function() {
+	$('#searchCustomer').click(function() {
+		tableCustomers.ajax.reload();
+	});
+});
 
 function formatSerial(serial) {
 	serial = '' + serial;
@@ -133,11 +138,18 @@ function formatSerial(serial) {
     return strFormatSerial;
 }
 
-function showAlertError() {
+function formatTime(time) {
+	time = '' + time;
+    var strFormatTime = "00" + time;
+    strFormatTime = strFormatTime.substring(time.length);
+    return strFormatTime;
+}
+
+function showAlertError(text='Đã xảy ra lỗi...', title='Oops!') {
 	swal({
 		type : 'error',
-		title : 'Oops!',
-		text: 'Đã xảy ra lỗi...'
+		title : title,
+		text: text
 	}).catch(swal.noop)
 }
 
@@ -219,7 +231,9 @@ $(function() {
 		else {	
 			e.preventDefault();
 			var symbol = $('#symbol');
-			if (initValueSymbol != symbol.val()) {
+			var type = $('#type');
+			var field = $('#field');
+			if (initValueSymbol != symbol.val() || initValueType != type.val() || initValueField != field.val()) {
 				swal(
 						{
 							title : "Bạn có chắc?",
@@ -255,15 +269,14 @@ $(function() {
 				      }
 				    }).catch(swal.noop)
 			}
-			/*
-			 * swal({ title : "Cập nhật khách hàng", text : "Bạn muốn cập nhật
+			
+			/* * swal({ title : "Cập nhật khách hàng", text : "Bạn muốn cập nhật
 			 * khách hàng bằng cách nào?", type : "info", showCancelButton :
 			 * true, confirmButtonText : "Nâng phiên bản!", cancelButtonText :
 			 * "Cập nhật trực tiếp!", closeOnConfirm : true, closeOnCancel :
 			 * true }, function(isConfirm) { if (!isConfirm) {
 			 * $('#upgradeVersion').val('false'); } choice = "true";
-			 * $('#CustomerForm').submit(); });
-			 */
+			 * $('#CustomerForm').submit(); });*/ 
 		}
 	});
 });
@@ -299,7 +312,37 @@ $(function() {
 		});
 	});
 });
-
+$(function() {
+	$('#symbol').on('input', function() {
+		if ($(this).val() == initValueSymbol) {
+			$('#serial').val(initValueSerial);
+			changeValueFserial(initValueSerial);
+			return;
+		}
+		if (!$(this).val()) {
+			$('#serial').val(null);
+			changeValueFserial(null);
+			return;
+		}
+		var ajax = $.ajax({
+			type : "GET",
+			url : contextPath + '/GetMaxSerial',
+			data : {
+				symbol : $(this).val()
+			},
+		});
+		ajax.done(function(data) {
+			$('#symbol')[0].setCustomValidity("");
+			$('#serial').val(data + 1);
+			changeValueFserial(data + 1);
+		});
+		ajax.fail(function(data) {
+			$('#symbol')[0].setCustomValidity("Oops! Đã xảy ra lỗi...");
+			$('#serial').val(initValueSerial);
+			changeValueFserial(initValueSerial);
+		});
+	});
+});
 function changeValueFserial(value) {
 	if (!value) {
 		$("#fserial").val(null);
@@ -324,18 +367,18 @@ $(function() {
 
 $(function() {
 	$('#type').on('loaded.bs.select', function() {	
-		$('#txtType').val($('#type option:selected').attr('show'));
+		$('#txtType').val($(this).val());
 	});
 	$('#type').on('changed.bs.select', function() {
-		$('#txtType').val($('#type option:selected').attr('show'));
+		$('#txtType').val($(this).val());
 	});
 
 	$('#field').on('loaded.bs.select', function() {
-		$('#txtField').val($('#field option:selected').attr('show'));
+		$('#txtField').val($(this).val());
 	});
 
 	$('#field').on('changed.bs.select', function() {
-		$('#txtField').val($('#field option:selected').attr('show'));
+		$('#txtField').val($(this).val());
 	});
 });
 
@@ -366,8 +409,8 @@ $(function() {
 $(function() {
 	$('#changeRequest').click(function() {
 		$('fieldset').removeAttr('disabled');
-		$('#saveCustomer').removeAttr('style');
-		$(this).attr('style', 'display: none;');
+		$('#changeRequest').attr('style', 'display: none;');
+		$('#saveCustomer').removeAttr('style');	
 	});
 });
 
@@ -512,12 +555,12 @@ $(function() {
 	});
 });
 
-$(function() {
+/*$(function() {
 	var formChange = false;
 	$("#CustomerForm").change(function() {
 		formChange = true;
 	});
-	$('.back').click(function() {
+	$('.saveCustomer').click(function() {
 		if (formChange === true) {
 			swal({
 				title : "Bạn có chắc?",
@@ -537,7 +580,7 @@ $(function() {
 			});
 		}
 	});
-});
+});*/
 
 /*
  * $(function() { $("#txtMST").keypress(function(event) { if (48 <= event.which &&

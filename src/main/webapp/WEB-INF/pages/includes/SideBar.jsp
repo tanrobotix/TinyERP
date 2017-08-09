@@ -17,7 +17,7 @@
 			</div>
 			<div class="info">
 				<a data-toggle="collapse" href="#collapseExample" class="collapsed">
-					Hoàng Huy <b class="caret"></b>
+					Group 3 <b class="caret"></b>
 				</a>
 				<div class="collapse" id="collapseExample">
 					<ul class="nav">
@@ -36,6 +36,10 @@
 			<li><a href="<c:url value="/CustomerManagement" />"> <i
 					class="pe-7s-id"></i>
 					<p>Quản lý khách hàng</p>
+			</a></li>
+			<li><a href="<c:url value="/OrderManagement" />"> <i
+					class="pe-7s-cart"></i>
+					<p>Quản lý đơn hàng</p>
 			</a></li>
 		</ul>
 	</div>

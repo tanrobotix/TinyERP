@@ -51,10 +51,17 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/CustomerManagement", method = RequestMethod.GET)
-	public String customerManagement(Model model, @RequestParam(value = "name", required = false) String name) {
+	public String customerManagement(Model model) {
 		
-		model.addAttribute("name", name);
 		return "CustomerManagement";
+
+	}
+	
+	@RequestMapping(value = "/HistoryCustomer", method = RequestMethod.GET)
+	public String historyCustomer(Model model, @RequestParam(value = "customercode", required = true) String customercode) {
+		
+		model.addAttribute("customercode", customercode);
+		return "HistoryCustomer";
 
 	}
 
@@ -73,14 +80,22 @@ public class CustomerController {
 	public @ResponseBody List<Customers> getListCustomers(@RequestParam(value = "name", required = false) String name) {
 		
 		/*return customerRepository.findByAndSort(name, new Sort(Sort.Direction.DESC, "customerid"));*/
+		name = name.replaceAll("\\s+", " ").trim();
 		return customerRepository.getListCustomers(name);
+	}
+	
+	@RequestMapping(value = "/GetListHistoryCustomer", method = RequestMethod.GET)
+	public @ResponseBody List<Customers> getListHistoryCustomer(@RequestParam(value = "customercode", required = true) String customercode) {
+		
+		return customerRepository.findByAndSort(customercode, new Sort(Sort.Direction.DESC,"version"));
+		
 	}
 	
 	@RequestMapping(value = "/DeleteCustomer", method = RequestMethod.POST)
 	public @ResponseBody void deleteCustomer(@RequestParam(value = "customerid", required = true) Long customerid) {
 		
 		Customers customer = customerRepository.findOne(customerid);//Làm như vầy để đỡ phải tạo @Query trong CustomerRepository
-		customer.setStatus(false);
+		customer.setMode(0);
 		customerRepository.save(customer);
 		
 	}
@@ -114,7 +129,8 @@ public class CustomerController {
 	}*/
 	
 	@RequestMapping(value = "/AllInOne", method = RequestMethod.GET)
-	public String allInOne(Model model, @RequestParam(value = "customerid", required = false) Long customerid) {
+	public String allInOne(Model model, @RequestParam(value = "customerid", required = false) Long customerid, 
+							@RequestParam(value = "mode", required = false) String mode) {
 		
 		Customers customer;
 		
@@ -123,7 +139,8 @@ public class CustomerController {
 		} else {
 			customer = customerRepository.findOne(customerid);
 		}
-			
+		
+		model.addAttribute("mode", mode);
 		model.addAttribute("CustomerForm", customer);	
 		model.addAttribute("Types", typeRepository.findAll());
 		model.addAttribute("Fields", fieldRepository.findAll());

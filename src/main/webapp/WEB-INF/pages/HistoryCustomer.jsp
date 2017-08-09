@@ -4,7 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Not for commercial use (Không dùng vào mục đích thương mại, đây là sản phẩm dùng não để ăn cắp :3) -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +29,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="">Quản lý khách hàng</a>
+						<a class="navbar-brand" href="">Lịch sử khách hàng</a>
 					</div>
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav navbar-right">
@@ -42,11 +41,11 @@
 									</p>
 							</a>
 								<ul class="dropdown-menu">
-									<li><a href="">Chú ý 1</a></li>
-									<li><a href="">Chú ý 2</a></li>
-									<li><a href="">Chú ý 3</a></li>
-									<li><a href="">Chú ý 4</a></li>
-									<li><a href="">Chú ý 5</a></li>
+									<li><a href="">Huy đại ka</a></li>
+									<li><a href="">Tân óc chó</a></li>
+									<li><a href="">Luật óc chó</a></li>
+									<li><a href="">Đến óc chó</a></li>
+									<li><a href="">Việt Anh óc chó</a></li>
 								</ul></li>
 
 							<li class="dropdown dropdown-with-icons"><a href=""
@@ -82,24 +81,9 @@
 							<div class="card">
 								<div class="content">
 									<div class="toolbar">
-										<div class="form-group form-inline">
-											<div class="form-group">
-												<a href="<c:url value="AllInOne?mode=save" />"
-													class="btn btn-success btn-sm">Thêm</a>
-											</div>
-											<div class="input-group input-group-sm">
-												<input id="name" name="name" type="text"
-													class="form-control" placeholder="Tìm kiếm theo tên...">
-												<span class="input-group-btn">
-													<button id="searchCustomer" class="btn btn-primary">
-														<i class="fa fa-search"></i>
-													</button>
-												</span>
-											</div>
-										</div>
 									</div>
 									<div class="fresh-datatables">
-										<table id="tableCustomers" class="table table-striped"
+										<table id="tableHistoryCustomer" class="table table-striped"
 											width="100%">
 											<thead>
 												<tr>
@@ -111,7 +95,8 @@
 													<th>Website</th>
 													<th>Thư điện tử</th>
 													<th>Phiên bản</th>
-													<th>Hành động</th>
+													<th>Ngày tạo</th>
+													<th>lần cập nhật sau cùng</th>
 												</tr>
 											</thead>
 										</table>
@@ -127,18 +112,16 @@
 	</div>
 	<%@include file="includes/FixedPlugin.jsp"%>
 	<script>
-		$.fn.dataTable.ext.errMode = 'none';
-		var tableCustomers = $('#tableCustomers').on( 'error.dt', function ( e, settings, techNote, message ) {
-			showAlertError();
-	    } ).DataTable(
+		var tableHistoryCustomer = $('#tableHistoryCustomer')
+				.DataTable(
 						{
 							"processing" : true,
 							"ajax" : {
-								"url" : contextPath + "/GetListCustomers",
+								"url" : contextPath + "/GetListHistoryCustomer",
 								"dataSrc" : "",
-								"data" : function ( d ) {
-							        d.name = $('#name').val();
-							    }
+								"data" : {
+									"customercode" : "${customercode}"
+								}
 							},
 							"columns" : [
 									{
@@ -173,29 +156,45 @@
 										"data" : "version"
 									},
 									{
-										"orderable" : false,
 										"render" : function(data, type, full,
 												meta) {
-											return ''
-													+ '<div class="dropdown pull-right">'
-													+ '<button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">'
-													+ '<span class="caret"></span>'
-													+ '</button>'
-													+ '<ul class="dropdown-menu pull-right">'
-													+ '<li><a href="AllInOne?mode=save&customerid='
-													+ full.customerid
-													+ '"> <i class="text-warning fa fa-edit"></i> Sửa</a></li>'
-													+ '<li onclick="deleteCustomer('
-													+ full.customerid
-													+ ')"><a role="button"><i class="text-danger fa fa-times"></i> Xóa</a></li>'
-													+ '<li><a href="HistoryCustomer?customercode='
-													+ full.customercode
-													+ '"><i class="text-primary fa fa-history"></i> Xem lịch sử</a></li>'
-													+ '<li><a role="button"><i class="text-success fa fa-plus"></i> Thêm đơn hàng</a></li>'
-													+ '<li><a role="button"><i class="text-info fa fa-list"></i> Xem đơn hàng</a></li>'
-													+ '</ul>' + '</div>';
+											var year = full.datecreated.year,
+												month = formatTime(full.datecreated.monthOfYear),
+												day = formatTime(full.datecreated.dayOfMonth),
+												hour = formatTime(full.datecreated.hourOfDay),
+												minute = formatTime(full.datecreated.minuteOfHour),
+												second = formatTime(full.datecreated.secondOfMinute)
+												time = hour + ':' + minute + ':' + second;
+											return '<span class="hidden">'
+													+ year + '/' + month + '/' + day
+													+ ' '
+													+ time
+													+ '</span>'
+													+ day + '/' + month + '/' + year
+													+ ' '
+													+ time
 										}
-									}, ],
+									},
+									{
+										"render" : function(data, type, full,
+												meta) {
+											var year = full.lastupdate.year,
+												month = formatTime(full.lastupdate.monthOfYear),
+												day = formatTime(full.lastupdate.dayOfMonth),
+												hour = formatTime(full.lastupdate.hourOfDay),
+												minute = formatTime(full.lastupdate.minuteOfHour),
+												second = formatTime(full.lastupdate.secondOfMinute)
+												time = hour + ':' + minute + ':' + second;
+											return '<span class="hidden">'
+													+ year + '/' + month + '/' + day
+													+ ' '
+													+ time
+													+ '</span>'						
+													+ day + '/' + month + '/' + year
+													+ ' '
+													+ time
+										}
+									},],
 							"order" : [],
 							"responsive" : true,
 							"lengthMenu" : [ [ 10, 25, 50, -1 ],

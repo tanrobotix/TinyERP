@@ -14,8 +14,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 
-public interface TypeRepository extends JpaRepository<Types, Integer>{
+public interface TypeRepository extends JpaRepository<Types, String>{
     
-	public Types findByValue(String value);
-
 }

@@ -29,21 +29,18 @@ public class Fields implements Serializable {
 	private static final long serialVersionUID = 3L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "fieldid")
-	private Integer fieldid;
+	private String fieldid;
 	@Column(name = "name", length = 100, nullable = false)
 	private String name;
-	@Column(name = "value", length = 1, nullable = false, unique = true)
-	private String value;
 	@JsonIgnore
 	@OneToMany(mappedBy = "field",  fetch = FetchType.EAGER)
 	private Set<Customers> customers;
 	
-	public Integer getFieldid() {
+	public String getFieldid() {
 		return fieldid;
 	}
-	public void setFieldid(Integer fieldid) {
+	public void setFieldid(String fieldid) {
 		this.fieldid = fieldid;
 	}
 	public String getName() {
@@ -51,12 +48,6 @@ public class Fields implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
 	}
 	public Set<Customers> getCustomers() {
 		return customers;

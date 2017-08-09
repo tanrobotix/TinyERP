@@ -36,14 +36,17 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a href="" class="dropdown-toggle"
 								data-toggle="dropdown"> <i class="fa fa-bell-o"></i> <span
-									class="notification">2</span>
+									class="notification">5</span>
 									<p class="hidden-md hidden-lg">
 										Thông báo <b class="caret"></b>
 									</p>
 							</a>
 								<ul class="dropdown-menu">
-									<li><a href="">Huy đại ka</a></li>
-									<li><a href="">Tân óc chó</a></li>
+									<li><a href="">Chú ý 1</a></li>
+									<li><a href="">Chú ý 2</a></li>
+									<li><a href="">Chú ý 3</a></li>
+									<li><a href="">Chú ý 4</a></li>
+									<li><a href="">Chú ý 5</a></li>
 								</ul></li>
 
 							<li class="dropdown dropdown-with-icons"><a href=""
@@ -92,12 +95,12 @@
 												aria-expanded="true">
 												<div class="panel-body">
 													<spring:url value="/SaveCustomer" var="SaveCustomer" />
-													<form:form action="${SaveCustomer}" method="POST"
+													<form:form id="CustomerForm" action="${SaveCustomer}" method="POST"
 														modelAttribute="CustomerForm">
 														<form:input id="customerid" path="customerid"
 															type="hidden" />
 														<form:input id="version" path="version" type="hidden" />
-														<form:input id="status" path="status" type="hidden" />
+														<form:input id="mode" path="mode" type="hidden" />
 														<form:input id="serial" path="serial" type="hidden" />
 														<form:input id="datecreated" path="datecreated"
 															type="hidden" />
@@ -105,7 +108,7 @@
 															type="hidden" />
 														<form:input id="sizeOrders" path="sizeOrders"
 															type="hidden" />
-														<fieldset>
+														<fieldset disabled>
 															<div class="row">
 																<div class="col-md-6">
 																	<div class="form-group">
@@ -113,19 +116,19 @@
 																			<label>Tên đơn vị <span class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
-																			<div class="input-group">
-																				<form:input id="name" path="name" type="text"
-																					class="form-control" placeholder="Tên đơn vị"
-																					maxlength="100" required="required"
-																					pattern="[^\-^_^'&quot;~`!@#$%&*()+={}:,;./?/><\\\|\][]+"
-																					title="Tên đơn vị không được chứa các ký tự ~`!@#$%^&*()_-+={[}]\|&quot;':;<,>.?/" />
-																				<span class="input-group-btn ">
+																			<!-- <div class="input-group"> -->
+																			<form:input id="name" path="name" type="text"
+																				class="form-control" placeholder="Tên đơn vị"
+																				maxlength="100" required="required"
+																				pattern="[^\-^_^'&quot;~`!@#$%&*()+={}:,.;/?/><\\\|\][]+"
+																				title="Tên đơn vị không được chứa các ký tự ~`!@#$%^&*()_-+={[}]\|&quot;':;<,>?/" />
+																			<!-- <span class="input-group-btn ">
 																					<button type="button" class="btn btn-success"
 																						data-toggle="modal" data-target="#tableCustomers">
 																						<i class="fa fa-search" aria-hidden="true"></i>
 																					</button>
-																				</span>
-																			</div>
+																				</span> -->
+																			<!-- </div> -->
 																		</div>
 																	</div>
 																</div>
@@ -140,20 +143,22 @@
 																					<td><form:input id="symbol" path="symbol"
 																							type="text" class="form-control"
 																							placeholder="Kí hiệu" maxlength="4"
+																							pattern="[a-zA-Z][a-zA-Z0-9]+"
+																							title="Ký tự đầu tiên phải là: a->z hoặc A->Z.\n
+																									Ký tự thứ 2->4 có thể có hoặc không và phải là: a->z, A->Z, 0->9"
 																							required="required" /></td>
 																					<td>&nbsp;</td>
-																					<!-- data-readonly="data-readonly" -->
-																					<td><input id="txtType" type="text"
-																						class="form-control" required="required"
-																						disabled="disabled"></td>
+																					<td style="cursor: not-allowed;"><input
+																						id="txtType" type="text" class="form-control"
+																						required="required" data-readonly="data-readonly"></td>
 																					<td>&nbsp;</td>
-																					<td><input id="txtField" type="text"
-																						class="form-control" required="required"
-																						disabled="disabled"></td>
+																					<td style="cursor: not-allowed;"><input
+																						id="txtField" type="text" class="form-control"
+																						required="required" data-readonly="data-readonly"></td>
 																					<td>&nbsp;</td>
-																					<td><input id="fserial" type="text"
-																						required="required" class="form-control"
-																						disabled="disabled"></td>
+																					<td style="cursor: not-allowed;"><input
+																						id="fserial" type="text" required="required"
+																						class="form-control" data-readonly="data-readonly"></td>
 																				</tr>
 																			</table>
 																		</div>
@@ -169,11 +174,8 @@
 																		<div class="col-md-8">
 																			<form:select id="type" path="type.typeid"
 																				class="selectpicker" data-width="100%">
-																				<%-- <form:options items="${Types}" itemValue="typeid"
-																					itemLabel="name"/> --%>
-																				<c:forEach items="${Types}" var="t">
-																					<form:option value="${t.typeid}" show="${t.value}">${t.name}</form:option>
-																				</c:forEach>
+																				<form:options items="${Types}" itemValue="typeid"
+																					itemLabel="name" />
 																			</form:select>
 																		</div>
 																	</div>
@@ -185,13 +187,9 @@
 																		</div>
 																		<div class="col-md-8">
 																			<form:select id="field" path="field.fieldid"
-																				show="field.value" class="selectpicker"
-																				data-width="100%">
-																				<%-- <form:options items="${Fields}" itemValue="fieldid"
-																					itemLabel="name"/> --%>
-																				<c:forEach items="${Fields}" var="f">
-																					<form:option value="${f.fieldid}" show="${f.value}">${f.name}</form:option>
-																				</c:forEach>
+																				class="selectpicker" data-width="100%">
+																				<form:options items="${Fields}" itemValue="fieldid"
+																					itemLabel="name" />
 																			</form:select>
 																		</div>
 																	</div>
@@ -201,10 +199,13 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<div class="col-md-4 text-right">
-																			<label>Địa chỉ</label>
+																			<label>Địa chỉ <span class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
 																			<form:input id="address" path="address"
+																				required="required"
+																				pattern="[^\-^_^'&quot;~`!@#$%&*()+={}:;?><\\|\][]+"
+																				title="Địa chỉ không được chứa các ký tự ~`!@#$%^&*()_-+={[}]\|&quot;':;<,>?"
 																				maxlength="200" type="text" class="form-control"
 																				placeholder="Địa chỉ" />
 																		</div>
@@ -215,10 +216,14 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<div class="col-md-4 text-right">
-																			<label>Người đại diện</label>
+																			<label>Người đại diện <span
+																				class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
 																			<form:input path="representatives" maxlength="100"
+																				required="required"
+																				pattern="[^\-^_^'&quot;~`!@#$%&*()+={}:,.;/?/><\\\|\][]+"
+																				title="Người đại diện không được chứa các ký tự ~`!@#$%^&*()_-+={[}]\|&quot;':.;<,>?/"
 																				type="text" class="form-control"
 																				placeholder="Người đại diện" />
 																		</div>
@@ -227,10 +232,11 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<div class="col-md-4 text-right">
-																			<label>Mã số thuế</label>
+																			<label>Mã số thuế <span class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
-																			<form:input id="tax" path="tax" maxlength="14"
+																			<form:input id="tax" path="tax" minlength="10"
+																				maxlength="13" pattern="\d+" required="required"
 																				type="text" class="form-control"
 																				placeholder="Mã số thuế" />
 																		</div>
@@ -241,25 +247,26 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<div class="col-md-4 text-right">
-																			<label>Chức danh</label>
+																			<label>Chức danh <span class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
 																			<form:input id="title" path="title" type="text"
-																				maxlength="50" class="form-control"
-																				placeholder="Chức danh" />
+																				required="required" maxlength="50"
+																				class="form-control" placeholder="Chức danh" />
 																		</div>
 																	</div>
 																</div>
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<div class="col-md-4 text-right">
-																			<label>Điện thoại</label>
+																			<label>Điện thoại <span class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
-																			<%-- pattern="\(\+[1-9]\d{0,3}\)[0-9]{8,16}" --%>
 																			<form:input id="phone" path="phone" maxlength="20"
-																				placeholder="(+84)1269071196 hoặc 01269071196"
-																				class="form-control" />
+																				required="required"
+																				pattern="(\(\+[1-9]\d{0,3}\)[0-9]{4,16})|0[0-9]{9,10}"
+																				title="Ví dụ: (+84)1269071196 hoặc 01269071196"
+																				placeholder="Số điện thoại" class="form-control" />
 																		</div>
 																	</div>
 																</div>
@@ -268,12 +275,12 @@
 																<div class="col-md-6">
 																	<div class="form-group">
 																		<div class="col-md-4 text-right">
-																			<label>Thư điện tử</label>
+																			<label>Thư điện tử <span class="text-danger">*</span></label>
 																		</div>
 																		<div class="col-md-8">
 																			<form:input id="email" path="email" type="email"
-																				class="form-control"
-																				placeholder="14520359@gm.uit.edu.vn" maxlength="100" />
+																				class="form-control" required="required"
+																				placeholder="Email" maxlength="100" />
 																		</div>
 																	</div>
 																</div>
@@ -284,8 +291,10 @@
 																		</div>
 																		<div class="col-md-8">
 																			<form:input path="mobile" type="text"
-																				placeholder="(+84)1269071196 hoặc 01269071196"
-																				maxlength="20" class="form-control" />
+																				pattern="(\(\+[1-9]\d{0,3}\)[0-9]{4,16})|0[0-9]{9,10}"
+																				title="Ví dụ: (+84)1269071196 hoặc 01269071196"
+																				placeholder="Di động" maxlength="20"
+																				class="form-control" />
 																		</div>
 																	</div>
 																</div>
@@ -299,7 +308,7 @@
 																		<div class="col-md-8">
 																			<form:input id="website" path="website" type="url"
 																				maxlength="100" class="form-control"
-																				placeholder="https://hh.com" />
+																				placeholder="Trang Web" />
 
 																		</div>
 																	</div>
@@ -311,8 +320,10 @@
 																		</div>
 																		<div class="col-md-8">
 																			<form:input path="fax"
-																				placeholder="(+84)1269071196 hoặc 01269071196"
-																				maxlength="20" class="form-control" />
+																				pattern="(\(\+[1-9]\d{0,3}\)[0-9]{4,16})|0[0-9]{9,10}"
+																				title="Ví dụ: (+84)1269071196 hoặc 01269071196"
+																				placeholder="Fax" maxlength="20"
+																				class="form-control" />
 
 																		</div>
 																	</div>
@@ -321,18 +332,11 @@
 														</fieldset>
 														<div class="row">
 															<div class="col-md-12 text-center">
-																<!-- <button id="changeRequest" type="button"
-																	class="btn btn-info">Cập nhật thông tin khách
-																	hàng</button> -->
-																<!-- <button id="submitFormCustomer" type="submit"
-																	style="display: none;">Lưu thông tin khách
-																	hàng</button> -->
+																<a id="changeRequest" class="btn btn-info">Cập nhật
+																	thông tin khách hàng</a>
 																<button id="saveCustomer" type="submit"
-																	class="btn btn-primary">
-																	<i class="fa fa-save"></i>Lưu thông tin khách hàng
-																</button>
-																<%-- <a href="<c:url value="/CustomerManagement" />" class="btn btn-default" >Trở về
-																	</a> --%>
+																	class="btn btn-info" style="display: none;">
+																	Lưu thông tin khách hàng</button>
 															</div>
 														</div>
 													</form:form>
@@ -356,14 +360,16 @@
 	<script>
 		var initValueSymbol = "${CustomerForm.symbol}";
 		var initValueSerial = "${CustomerForm.serial}";
+		var initValueType = "${CustomerForm.type.typeid}";
+		var initValueField = "${CustomerForm.field.fieldid}";
 		changeValueFserial(initValueSerial);
 		//$('#fserial').val(formatSerial(initValueSerial));
-		/* var view = "${view}";
-		if (!view) {
+		var mode = "${mode}";
+		if (mode == "save") {
 			$('fieldset').removeAttr('disabled');
-			$('#saveCustomer').removeAttr('style');
 			$('#changeRequest').attr('style', 'display: none;');
-		} */
+			$('#saveCustomer').removeAttr('style');
+		}
 	</script>
 </body>
 </html>
