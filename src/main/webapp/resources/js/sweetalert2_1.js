@@ -28,10 +28,10 @@ var defaultParams = {
   preConfirm: null,
   confirmButtonText: 'OK',
   confirmButtonColor: '#3085d6',
-  confirmButtonClass: 'btn btn-info btn-fill', //huydh
+  confirmButtonClass: 'btn btn-info', //huydh
   cancelButtonText: 'Cancel',
   cancelButtonColor: '#aaa',
-  cancelButtonClass: 'btn btn-danger btn-fill', //huydh
+  cancelButtonClass: 'btn btn-danger', //huydh
   buttonsStyling: false, //huydh
   reverseButtons: false,
   focusCancel: false,

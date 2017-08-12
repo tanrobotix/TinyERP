@@ -34,19 +34,51 @@ public class Orders implements Serializable {
 	@Column(name = "startdate", nullable = false)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime startdate;
-	@Column(name = "finishdate")
+	@Column(name = "finishdate", nullable = true)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime finishdate;
-	@Column(name = "serial", length = 4,  nullable = false)
+	@Column(name = "serial",  nullable = false)
 	private Integer serial;
 	@Column(name = "status", nullable = false)
 	private Boolean status;
+	@Column(name = "note", nullable = true)
+	private String note;
+	@Column(name = "unit", nullable = true)
+	private String unit;
+	@Column(name = "number", nullable = true)
+	private Integer number;
+	@Column(name = "content", nullable = true)
+	private String content;
 	@Column(name = "mode", nullable = false)
 	private Integer mode;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customerid", nullable = false)
 	private Customers customer;
 	
+	public Integer getNumber() {
+		return number;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public Long getOrderid() {
 		return orderid;
 	}

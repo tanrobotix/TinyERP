@@ -131,7 +131,7 @@ lbd = {
 
     initSidebarsCheck: function(){
         if($(window).width() <= 991){
-            if($sidebar.length != 0){
+            if(!$sidebar || $sidebar.length != 0){
                 lbd.initSidebarMenu();
 
             } else {

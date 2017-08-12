@@ -84,8 +84,8 @@
 									<div class="toolbar">
 										<div class="form-group form-inline">
 											<div class="form-group">
-												<a href="<c:url value="AllInOne?mode=save" />"
-													class="btn btn-success btn-sm">Thêm</a>
+												<button onclick="allInOne(1);"
+													class="btn btn-success btn-sm">Thêm</button>
 											</div>
 											<div class="form-group">
 												<input id="name" name="name" type="text"
@@ -141,15 +141,26 @@
 								"dataSrc" : "",
 								"data" : function(d) {
 									d.name = $('#name').val();
-								}
+								},
+								"error": function() {
+									/* switch (jqXHR.status) {
+										case 0: 
+											showAlertError("Máy chủ không hoạt động");
+											break;
+										default:
+											showAlertError();
+											break;
+									}  */
+									showAlertError();
+						        }
 							},
 							"columns" : [
 									{
 										"render" : function(data, type, full,
 												meta) {
-											return '<a href="AllInOne?mode=view&customerid='
+											return '<a role="button" onclick="allInOne(0, '
 													+ full.customerid
-													+ '">'
+													+ ');">'
 													+ full.customercode
 													+ '</a>';
 										}
@@ -185,15 +196,16 @@
 													+ '<span class="caret"></span>'
 													+ '</button>'
 													+ '<ul class="dropdown-menu pull-right">'
-													+ '<li><a href="AllInOne?mode=save&customerid='
+													+ '<li onclick="allInOne(1, ' 
 													+ full.customerid
-													+ '"> <i class="text-warning fa fa-edit"></i> Sửa</a></li>'
+													+ ')"><a role="button">'
+													+ '<i class="text-warning fa fa-edit"></i> Sửa</a></li>'
 													+ '<li onclick="deleteCustomer('
 													+ full.customerid
 													+ ')"><a role="button"><i class="text-danger fa fa-times"></i> Xóa</a></li>'
-													+ '<li><a href="HistoryCustomer?customercode='
+													+ '<li><a href="HistoryCustomer/'
 													+ full.customercode
-													+ '"><i class="text-primary fa fa-history"></i> Xem lịch sử</a></li>'
+													+ '"><i class="text-muted fa fa-history"></i> Xem lịch sử</a></li>'
 													+ '<li><a role="button"><i class="text-success fa fa-plus"></i> Thêm đơn hàng</a></li>'
 													+ '<li><a role="button"><i class="text-info fa fa-list"></i> Xem đơn hàng</a></li>'
 													+ '</ul>' + '</div>';

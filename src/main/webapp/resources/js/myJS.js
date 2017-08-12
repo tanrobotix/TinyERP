@@ -1,144 +1,42 @@
 $(function() {
-/*	$('#tableDSDH').DataTable({
-		"pagingType" : "full_numbers_no_ellipses",
-		searchHighlight : true,
-		"language" : {
-			"sEmptyTable" : "Không có dữ liệu trong bảng",
-			"sInfo" : "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-			"sInfoEmpty" : "Đang xem 0 đến 0 trong tổng số 0 mục",
-			"sInfoFiltered" : "(Được lọc từ tổng số _MAX_ mục)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ",",
-			"sLengthMenu" : "Xem _MENU_ mục",
-			"sLoadingRecords" : "Đang tải...",
-			"sProcessing" : "Đang xử lý...",
-			"sSearch" : "Tìm kiếm:",
-			"sZeroRecords" : "Không tìm thấy kết quả",
-			"oPaginate" : {
-				"sFirst" : "Đầu",
-				"sLast" : "Cuối",
-				"sNext" : "Tiếp",
-				"sPrevious" : "Trước"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Kích hoạt để sắp xếp cột tăng dần",
-				"sSortDescending" : ": Kích hoạt hoạt để sắp xếp cột giảm dần"
-			}
+	$('.datepicker').datetimepicker({
+		locale : 'vi',
+		format : 'L',
+		icons : {
+			time : "fa fa-clock-o",
+			date : "fa fa-calendar",
+			up : "fa fa-chevron-up",
+			down : "fa fa-chevron-down",
+			previous : 'fa fa-chevron-left',
+			next : 'fa fa-chevron-right',
+			today : 'fa fa-screenshot',
+			clear : 'fa fa-trash',
+			close : 'fa fa-remove'
 		}
-	});*/
-	$('#tableTKKH').DataTable({
-		"language" : {
-			"sEmptyTable" : "Không có dữ liệu trong bảng",
-			"sInfo" : "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-			"sInfoEmpty" : "Đang xem 0 đến 0 trong tổng số 0 mục",
-			"sInfoFiltered" : "(Được lọc từ tổng số _MAX_ mục)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ",",
-			"sLengthMenu" : "Xem _MENU_ mục",
-			"sLoadingRecords" : "Đang tải...",
-			"sProcessing" : "Đang xử lý...",
-			"sSearch" : "Tìm kiếm:",
-			"sZeroRecords" : "Không tìm thấy kết quả",
-			"oPaginate" : {
-				"sFirst" : "Đầu",
-				"sLast" : "Cuối",
-				"sNext" : "Tiếp",
-				"sPrevious" : "Trước"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Kích hoạt để sắp xếp cột tăng dần",
-				"sSortDescending" : ": Kích hoạt hoạt để sắp xếp cột giảm dần"
-			}
-		},
-		searching : false,
-		ordering : false,
-		bFilter : false,
-		"lengthChange" : false,
-		"info" : true,
-		"pageLength" : 4
 	});
 });
-// CustomerManagement page
-/*
- * $(function() { $('#searchCustomers').click(function() { var value =
- * $('input[name=name]').val(); if (value) { $('#formSearchCustomers').submit(); }
- * }); });
- */
-
-/*
- * $(function() { $('.deleteCustomer') .click( function() { alert("1"); var cid =
- * $(this).val();
- * 
- * swal( { title : "Bạn có chắc?", text : "Xóa khách hàng sẽ xóa các đơn hàng
- * của khách hàng!", type : "warning", showCancelButton : true,
- * confirmButtonText : "Vâng, xóa nó!", cancelButtonText : "Không, hủy!",
- * closeOnConfirm : false, closeOnCancel : false }, function(isConfirm) { if
- * (isConfirm) { $ .ajax({ type : "POST", url : 'DeleteCustomer', data : { cid :
- * cid }, success : function(result) { swal( { title : "Đã xóa!", text : "Khách
- * hàng đã bị xóa, trang web sẽ reload sau 3s :3", timer : 3000, type :
- * "success", showConfirmButton : false }, function() { location .reload(); }); }
- * }); } else { swal( "Đã hủy", "Khách hàng của bạn được an toàn :))", "error"); }
- * }); }); });
- */
-
-/*
- * function deleteCustomer(cid) {
- * 
- * swal( { title : "Bạn có chắc?", text : "Xóa khách hàng sẽ xóa các đơn hàng
- * của khách hàng!", type : "warning", showCancelButton : true,
- * confirmButtonText : "Vâng, xóa nó!", cancelButtonText : "Không, hủy!", },
- * function(isConfirm) { if (isConfirm) { $ .ajax({ type : "POST", url :
- * 'DeleteCustomer', data : { cid : cid }, success : function(result) { swal( {
- * title : "Đã xóa!", text : "Khách hàng đã bị xóa, trang web sẽ reload sau 3s
- * :3", timer : 3000, type : "success", showConfirmButton : false }, function() {
- * location.reload(); }); } }); } else { swal("Đã hủy", "Khách hàng của bạn được
- * an toàn :))", "error"); } }); }
- */
-/*
- * $(function() { $('#revese-countdown') .prop('number', 3) .animateNumber( {
- * number: 0, numberStep: function(now, tween) { var target = $(tween.elem),
- * rounded_now = Math.round(now);
- * 
- * target.text(now === tween.end ? 'Launch!' : rounded_now); } }, 10000,
- * 'linear' ); });
- */
-
-
-/*
- * function deleteCustomer(customerid) { swal( { title : "Bạn có chắc?", text :
- * "Xóa thông tin khách hàng sẽ xóa thông tin các đơn hàng của khách hàng :3!",
- * type : "warning", showCancelButton : true, confirmButtonText : "Vâng, xóa nó! ",
- * cancelButtonText : "Không, hủy xóa!", showLoaderOnConfirm : true, preConfirm :
- * function(cid) { return new Promise(function(resolve) { setTimeout(function() {
- * var request = $.ajax({ type : "POST", url : contextPath + '/DeleteCustomer',
- * data : { customerid : customerid } }); request.done(function() { resolve();
- * }); request.fail(function() { swal({ type : 'error', title : 'Oops!', text:
- * 'Đã xảy ra sự cố...' }).catch(swal.noop) }); }, 2000) }) } }).then(function() {
- * var reloadInSeconds = 3; swal({ type : 'success', html: 'Trang web sẽ tự động
- * reload sau <span class="text-danger reverse-countdown">' + reloadInSeconds + '</span>
- * giây :3.', title : 'Xóa thành công!', showCloseButton : false,
- * confirmButtonText : 'Reload', timer: reloadInSeconds*1000 + 100,
- * }).then(function () { location.reload(); }, function (dismiss) { if (dismiss
- * === 'timer') { location.reload(); } }) setInterval(function() {
- * $('.reverse-countdown').html(--reloadInSeconds); }, 1000);
- * 
- * }).catch(swal.noop) }
- */
 
 $(function() {
+	
 	$('#searchCustomer').click(function() {
 		tableCustomers.ajax.reload();
 	});
+	
 	$('#searchOrders').click(function() {
 		tableOrders.ajax.reload();
 	});
+	
 });
 
-function formatSerial(serial) {
-	serial = '' + serial;
-    var strFormatSerial = "0000" + serial;
-    strFormatSerial = strFormatSerial.substring(serial.length);
-    return strFormatSerial;
+function formatSerial(value) {
+	if(!value) {
+		return null;
+	} else {
+		value = '' + value;
+		var formatSerial = "0000" + value;
+		formatSerial = formatSerial.substring(value.length);
+	    return formatSerial;
+	}
 }
 
 function formatTime(time) {
@@ -148,7 +46,7 @@ function formatTime(time) {
     return strFormatTime;
 }
 
-function showAlertError(text='Đã xảy ra lỗi...', title='Oops!') {
+function showAlertError(text="Đã xảy ra lỗi, bạn vui lòng thử lại hoặc liên hệ những người có liên quan để giải quyết!", title="Lỗi !") {
 	swal({
 		type : 'error',
 		title : title,
@@ -156,18 +54,18 @@ function showAlertError(text='Đã xảy ra lỗi...', title='Oops!') {
 	}).catch(swal.noop)
 }
 
-function getInfoCustomer(customerid) {
-	var ajax = $.ajax({
-		type : "GET",
-		url : contextPath + '/GetInfoCustomer',
-		type : "json",
-		data : {
-			"customerid" : customerid
-		}
-	});
-	ajax.done(function(data) {
-		console.log(data);
-	});
+/*
+ * function getInfoCustomer(customerid) { var ajax = $.ajax({ type : "GET", url :
+ * contextPath + '/GetInfoCustomer', type : "json", data : { "customerid" :
+ * customerid } }); ajax.done(function(data) { console.log(data); }); }
+ */
+
+function allInOne(mode, customerid) {
+	var form = $('<form>', {'action': contextPath + '/AllInOne', 'method': 'POST'})
+	.append($('<input>', {'name': 'mode', 'value': mode, 'type': 'hidden'}))
+    .append($('<input>', {'name': 'customerid', 'value': customerid, 'type': 'hidden'}));
+	
+	form.appendTo('body').submit();
 }
 
 function deleteCustomer(customerid) {
@@ -258,7 +156,7 @@ function deleteOrder(orderid) {
 			 * html: 'Thông báo sẽ tự động đóng sau <span class="text-danger
 			 * reverse-countdown">' + reloadInSeconds + '</span> giây :3.',
 			 */
-			text : 'Xóa thông tin đơn hàng thành công :3 !',
+			text : 'Xóa thông tin đơn hàng thành công!',
 			title : 'Xóa thành công!',
 			/* timer: reloadInSeconds*1000 + 100, */
 		}).then(function () {
@@ -273,33 +171,51 @@ function deleteOrder(orderid) {
 }
 
 // AllInOne page
+function saveCustomer(typeRequest) {
+	var data = $('#customerForm').serialize();
+	var ajax = $.ajax({
+					type : "POST",
+					url : contextPath + "/SaveCustomer/" + typeRequest,
+					data : data
+				});
+	
+	ajax.done(function() {
+		swal({
+			type : 'success',
+			text : 'Thông tin khách hàng được lưu thành công!',
+			title : 'Lưu thông tin khách hàng thành công!',
+			showCloseButton : true,
+		}).then(function () {
+		}).catch(swal.noop)
+	});
+	
+	ajax.fail(/*function(jqXHR, textStatus, errorThrown) {
+		showAlertError(jqXHR.responseText, textStatus + " " + jqXHR.status + " !");
+	}*/function() {
+		showAlertError();
+	}
+			);
+
+}
+
 $(function() {
-	var confirm = false;
-	$('#CustomerForm').submit(function(e) {
-		if (confirm == true)
-			return true;
-		var sizeOrders = $('#sizeOrders');
-		if (sizeOrders.val() == 0) {
-			return true;
-		}
-		else {	
-			e.preventDefault();
-			var symbol = $('#symbol');
-			var type = $('#type');
-			var field = $('#field');
-			if (initValueSymbol != symbol.val() || initValueType != type.val() || initValueField != field.val()) {
+	$('#customerForm').submit(function(e) {
+		e.preventDefault();
+		
+		if (hasOrders === "false") {
+			saveCustomer(-1);
+		} else {	
+			if (initValueSymbol != $('#symbol').val() || initValueType != $('#type').val() || initValueField != $('#field').val()) {
 				swal(
 						{
 							title : "Bạn có chắc?",
-							text : "Thông tin đơn hàng sẽ đặt lại!",
+							text : "Thông tin các đơn hàng liên quan đến khách hàng sẽ bị đặt lại!",
 							type : "warning",
-							confirmButtonText : "Vâng",
+							confirmButtonText : "Vâng!",
 							cancelButtonText : "Không",
 							showCancelButton : true,
 						}).then(function() {
-							$('#customerid').val(null);
-							confirm = true;
-							$('#CustomerForm').submit();
+							saveCustomer(0);
 				}).catch(swal.noop)
 			} else {
 				swal(
@@ -307,101 +223,72 @@ $(function() {
 							title : "Cập nhật khách hàng",
 							text : "Bạn muốn cập nhật khách hàng bằng cách nào?",
 							type : "question",
-							confirmButtonText : "Nâng phiên bản!",
+							confirmButtonText : "Nâng phiên bản mới!",
 							cancelButtonText : "Cập nhật trực tiếp!",
 							showCancelButton : true,
 						}).then(function() {
-							$('#customerid').val(null);
-							var valueVersion = Number($('#version').val()) + 1;
-							$('#version').val(valueVersion);
-							confirm = true;
-							$('#CustomerForm').submit();
+							saveCustomer(1);
 				}, function (dismiss) {
 				    if (dismiss === 'cancel') {
-							confirm = true;
-							$('#CustomerForm').submit();
+							saveCustomer(2);
 				      }
 				    }).catch(swal.noop)
 			}
-			
-			/* * swal({ title : "Cập nhật khách hàng", text : "Bạn muốn cập nhật
-			 * khách hàng bằng cách nào?", type : "info", showCancelButton :
-			 * true, confirmButtonText : "Nâng phiên bản!", cancelButtonText :
-			 * "Cập nhật trực tiếp!", closeOnConfirm : true, closeOnCancel :
-			 * true }, function(isConfirm) { if (!isConfirm) {
-			 * $('#upgradeVersion').val('false'); } choice = "true";
-			 * $('#CustomerForm').submit(); });*/ 
 		}
 	});
 });
 
 $(function() {
 	$('#symbol').on('input', function() {
-		if ($(this).val() == initValueSymbol) {
-			$('#serial').val(initValueSerial);
-			changeValueFserial(initValueSerial);
-			return;
-		}
-		if (!$(this).val()) {
+		if (!$('#symbol').val()) {
 			$('#serial').val(null);
-			changeValueFserial(null);
-			return;
+			return true;
+		}
+		if ($('#symbol').val() == initValueSymbol){
+			$('#serial').val(initValueSerial);
+			return true;
 		}
 		var ajax = $.ajax({
-			type : "GET",
+			type : "POST",
 			url : contextPath + '/GetMaxSerial',
 			data : {
-				symbol : $(this).val()
+				"symbol" : $('#symbol').val()
 			},
 		});
 		ajax.done(function(data) {
-			$('#symbol')[0].setCustomValidity("");
-			$('#serial').val(data + 1);
-			changeValueFserial(data + 1);
+			$('#serial').val(formatSerial(data + 1));
 		});
 		ajax.fail(function(data) {
-			$('#symbol')[0].setCustomValidity("Oops! Đã xảy ra lỗi...");
+			showAlertError();
+			$('#symbol').val(initValueSymbol);
 			$('#serial').val(initValueSerial);
-			changeValueFserial(initValueSerial);
 		});
 	});
 });
-$(function() {
-	$('#symbol').on('input', function() {
-		if ($(this).val() == initValueSymbol) {
-			$('#serial').val(initValueSerial);
-			changeValueFserial(initValueSerial);
-			return;
-		}
-		if (!$(this).val()) {
-			$('#serial').val(null);
-			changeValueFserial(null);
-			return;
-		}
-		var ajax = $.ajax({
-			type : "GET",
-			url : contextPath + '/GetMaxSerial',
-			data : {
-				symbol : $(this).val()
-			},
-		});
-		ajax.done(function(data) {
-			$('#symbol')[0].setCustomValidity("");
-			$('#serial').val(data + 1);
-			changeValueFserial(data + 1);
-		});
-		ajax.fail(function(data) {
-			$('#symbol')[0].setCustomValidity("Oops! Đã xảy ra lỗi...");
-			$('#serial').val(initValueSerial);
-			changeValueFserial(initValueSerial);
-		});
-	});
-});
-function changeValueFserial(value) {
+
+/*
+ * $(function() { $('#symbol').on('input', function() { if ($(this).val() ==
+ * initValueSymbol) { $('#serial').val(initValueSerial);
+ * changeValueFserial(initValueSerial); return; } if (!$(this).val()) {
+ * $('#serial').val(null); changeValueFserial(null); return; } var ajax =
+ * $.ajax({ type : "GET", url : contextPath + '/GetMaxSerial', data : { symbol :
+ * $(this).val() }, }); ajax.done(function(data) {
+ * $('#symbol')[0].setCustomValidity(""); $('#serial').val(data + 1);
+ * changeValueFserial(data + 1); }); ajax.fail(function(data) {
+ * $('#symbol')[0].setCustomValidity("Oops! Đã xảy ra lỗi...");
+ * $('#serial').val(initValueSerial); changeValueFserial(initValueSerial); });
+ * }); });
+ */
+/*
+ * function changeValueFserial(value) { if (!value) { $("#fserial").val(null); }
+ * else { $("#fserial").val(formatSerial(value)); } }
+ */
+
+function changeValueSerial(value) {
 	if (!value) {
-		$("#fserial").val(null);
+		$('#serial').val(null);
 	} else {	
-		$("#fserial").val(formatSerial(value)); 
+		$('#serial').val(formatSerial(value)); 
 	}	
 }
 
@@ -460,14 +347,19 @@ $(function() {
 	});
 });
 
+function changeRequest(mode) {
+	if (mode == 1) { 
+		$('#fsCustomer').removeAttr('disabled');
+		$('#changeRequest').attr('style', 'display: none;');
+		$('#saveCustomer').removeAttr('style');
+	}
+}
+
 $(function() {
 	$('#changeRequest').click(function() {
-		$('fieldset').removeAttr('disabled');
-		$('#changeRequest').attr('style', 'display: none;');
-		$('#saveCustomer').removeAttr('style');	
+		changeRequest(1);
 	});
 });
-
 /*
  * $(function() { $('input[type=mytel]').keydown(function(e) { // var l =
  * this.value.length; // var curval = $(this).val(); if (e.which == 8 || 48 >
@@ -609,32 +501,15 @@ $(function() {
 	});
 });
 
-/*$(function() {
-	var formChange = false;
-	$("#CustomerForm").change(function() {
-		formChange = true;
-	});
-	$('.saveCustomer').click(function() {
-		if (formChange === true) {
-			swal({
-				title : "Bạn có chắc?",
-				text : "Thông tin khách hàng của bạn sẽ không thay đổi!",
-				type : "warning",
-				showCancelButton : true,
-				confirmButtonText : "Vâng!",
-				cancelButtonText : "Hủy!",
-				closeOnConfirm : false,
-				closeOnCancel : false
-			}, function(isConfirm) {
-				if (isConfirm) {
-					return;
-				} else {
-					alert("21321321");
-				}
-			});
-		}
-	});
-});*/
+/*
+ * $(function() { var formChange = false; $("#CustomerForm").change(function() {
+ * formChange = true; }); $('.saveCustomer').click(function() { if (formChange
+ * === true) { swal({ title : "Bạn có chắc?", text : "Thông tin khách hàng của
+ * bạn sẽ không thay đổi!", type : "warning", showCancelButton : true,
+ * confirmButtonText : "Vâng!", cancelButtonText : "Hủy!", closeOnConfirm :
+ * false, closeOnCancel : false }, function(isConfirm) { if (isConfirm) {
+ * return; } else { alert("21321321"); } }); } }); });
+ */
 
 /*
  * $(function() { $("#txtMST").keypress(function(event) { if (48 <= event.which &&

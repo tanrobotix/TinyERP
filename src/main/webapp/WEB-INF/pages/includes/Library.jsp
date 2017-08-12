@@ -65,6 +65,8 @@
 	src="<c:url value="/resources/js/myJS.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/i18n/defaults-vi_VN.js" />"></script>
+<script src="<c:url value="/resources/js/moment-with-locales.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap-datetimepicker.js" />"></script>
 <script>var contextPath = "${pageContext.request.contextPath}";</script>
 
 

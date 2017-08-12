@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -94,21 +95,9 @@
 											<div id="collapseOne" class="panel-collapse collapse in"
 												aria-expanded="true">
 												<div class="panel-body">
-													<spring:url value="/SaveCustomer" var="SaveCustomer" />
-													<form:form id="CustomerForm" action="${SaveCustomer}" method="POST"
-														modelAttribute="CustomerForm">
-														<form:input id="customerid" path="customerid"
-															type="hidden" />
-														<form:input id="version" path="version" type="hidden" />
-														<form:input id="mode" path="mode" type="hidden" />
-														<form:input id="serial" path="serial" type="hidden" />
-														<form:input id="datecreated" path="datecreated"
-															type="hidden" />
-														<form:input id="lastupdate" path="lastupdate"
-															type="hidden" />
-														<form:input id="sizeOrders" path="sizeOrders"
-															type="hidden" />
-														<fieldset disabled>
+													<form:form id="customerForm" method="POST"
+														modelAttribute="customerForm">
+														<fieldset id="fsCustomer" disabled>
 															<div class="row">
 																<div class="col-md-6">
 																	<div class="form-group">
@@ -143,9 +132,8 @@
 																					<td><form:input id="symbol" path="symbol"
 																							type="text" class="form-control"
 																							placeholder="Kí hiệu" maxlength="4"
-																							pattern="[a-zA-Z][a-zA-Z0-9]+"
-																							title="Ký tự đầu tiên phải là: a->z hoặc A->Z.\n
-																									Ký tự thứ 2->4 có thể có hoặc không và phải là: a->z, A->Z, 0->9"
+																							pattern="[a-zA-z][0-9a-zA-Z]+|[a-zA-z]"
+																							title="Ký tự đầu tiên: a->z, A->Z. Ký tự 2->4 có thể có hoặc không: a->z, A->Z, 0->9"
 																							required="required" /></td>
 																					<td>&nbsp;</td>
 																					<td style="cursor: not-allowed;"><input
@@ -156,9 +144,10 @@
 																						id="txtField" type="text" class="form-control"
 																						required="required" data-readonly="data-readonly"></td>
 																					<td>&nbsp;</td>
-																					<td style="cursor: not-allowed;"><input
-																						id="fserial" type="text" required="required"
-																						class="form-control" data-readonly="data-readonly"></td>
+																					<td style="cursor: not-allowed;"><form:input
+																							id="serial" path="serial" type="text"
+																							reuired="required" class="form-control"
+																							data-readonly="data-readonly" /></td>
 																				</tr>
 																			</table>
 																		</div>
@@ -344,6 +333,184 @@
 												</div>
 											</div>
 										</div>
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<h4 class="panel-title">
+													<a data-target="#collapseTwo" href="#"
+														data-toggle="collapse"> Thông tin đơn hàng <b
+														class="caret"></b>
+													</a>
+												</h4>
+											</div>
+											<div id="collapseTwo" class="panel-collapse collapse in">
+												<div class="panel-body">
+													<form:form id="orderForm" method="POST"
+														modelAttribute="orderForm">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-4 text-right">
+																		<label>Người tiếp nhận <font
+																			class="text-danger">*</font></label>
+																	</div>
+																	<div class="col-md-8">
+																		<div style="cursor: not-allowed">
+																			<input type="text" class="form-control" value="admin"
+																				placeholder="Người tiếp nhận" required="required"
+																				data-readonly="data-readonly">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-4 text-right">
+																		<label>Ngày khởi tạo <font class="text-danger">*</font></label>
+																	</div>
+																	<div class="col-md-8">
+																		<form:input id="startdate" path="startdate" class="form-control datepicker"
+																			required="required" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-4 text-right">
+																		<label>Tên đơn hàng <font class="text-danger">*</font></label>
+																	</div>
+																	<div class="col-md-8">
+																		<form:input type="text" path="name" class="form-control"
+																			placeholder="Tên đơn hàng" required="required"
+																			maxlength="100" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-4 text-right">
+																		<label>Nội dung yêu cầu</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<div class="col-md-12">
+																		<form:textarea path="content" style="resize: none;" class="form-control"
+																			rows="5" maxlength="1000" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-4 text-right">
+																		<label>Thời gian hoàn tất</label>
+																	</div>
+																	<div class="col-md-8">
+																		<form:input id="finishdate" path="finishdate" type="text"
+																			class="form-control datepicker" />
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-12">
+																		<form:input path="note" type="text" class="form-control"
+																			placeholder="Ghi chú" maxlength="100"/>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-4 text-right">
+																		<label>Số lượng</label>
+																	</div>
+																	<div class="col-md-8">
+																		<form:input path="number" type="number" min="1" max="9999999999"
+																			value="1" class="form-control" placeholder="Số lượng" />
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="col-md-12">
+																		<form:input path="unit" type="text" class="form-control"
+																			placeholder="Đơn vị tính" maxlength="20" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<div class="col-md-2 text-right">
+																		<label>Yêu cầu thêm</label>
+																	</div>
+																	<div class="col-md-10">
+																			<%-- <table id="tableRequirements"
+																				class="table table-bordered">
+																				<colgroup>
+																					<col bgcolor="#eee" />
+																				</colgroup>
+																				<thead align="center">
+																					<tr bgcolor="#eee">
+																						<td class="col-md-1"></td>
+																						<td class="col-md-5">Thuộc tính</td>
+																						<td class="col-md-5">Giá trị</td>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr>
+																						<td>1</td>
+																						<td><input type="text" maxlength="50"></td>
+																						<td><input type="text" maxlength="50"></td>
+																					</tr>
+																					<tr>
+																						<td>2</td>
+																						<td><input type="text" maxlength="50"></td>
+																						<td><input type="text" maxlength="50"></td>
+																					</tr>
+																					<tr>
+																						<td>3</td>
+																						<td><input type="text" maxlength="50"></td>
+																						<td><input type="text" maxlength="50"></td>
+																					</tr>
+																					<tr>
+																						<td><span>4</span></td>
+																						<td><input type="text" maxlength="50"></td>
+																						<td><input type="text" maxlength="50"></td>
+																					</tr>
+																					<tr>
+																						<td id="addRow" role="button">...</td>
+																						<td><input readonly></td>
+																						<td><input readonly></td>
+																					</tr>
+																				</tbody>
+																			</table> --%>
+																		
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12 text-center">
+																<button id="saveCustomer" type="submit"
+																	class="btn btn-info">Lưu</button>
+															</div>
+														</div>
+													</form:form>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -355,21 +522,15 @@
 		</div>
 	</div>
 	<%@include file="includes/FixedPlugin.jsp"%>
-	<script
-		src="<c:url value="/resources/js/jquery.form-validator.min.js" />"></script>
 	<script>
-		var initValueSymbol = "${CustomerForm.symbol}";
-		var initValueSerial = "${CustomerForm.serial}";
-		var initValueType = "${CustomerForm.type.typeid}";
-		var initValueField = "${CustomerForm.field.fieldid}";
-		changeValueFserial(initValueSerial);
-		//$('#fserial').val(formatSerial(initValueSerial));
-		var mode = "${mode}";
-		if (mode == "save") {
-			$('fieldset').removeAttr('disabled');
-			$('#changeRequest').attr('style', 'display: none;');
-			$('#saveCustomer').removeAttr('style');
-		}
+		var initValueSymbol = "${customerForm.symbol}", 
+			initValueType = "${customerForm.type.typeid}", 
+			initValueField = "${customerForm.field.fieldid}", 
+			initValueSerial = formatSerial("${customerForm.serial}"),
+			hasOrders = "${fn:length(customerForm.orders) > 0}";
+
+		$('#serial').val(initValueSerial)
+		changeRequest("${mode}");
 	</script>
 </body>
 </html>

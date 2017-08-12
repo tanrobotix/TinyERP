@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.joda.time.DateTime;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 
 @Entity
-@Table(name = "Customers", uniqueConstraints = {@UniqueConstraint(columnNames = {"customercode", "version"})})
+@Table(name = "Customers", uniqueConstraints = { @UniqueConstraint(columnNames = { "customercode", "version" }) })
+@DynamicUpdate(value=true)
 public class Customers implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,7 +38,7 @@ public class Customers implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customerid")
 	private Long customerid;
-	@Column(name = "customercode",  nullable = false)
+	@Column(name = "customercode", nullable = false)
 	private String customercode;
 	@Column(name = "symbol", length = 4, nullable = false)
 	private String symbol;
@@ -67,10 +69,10 @@ public class Customers implements Serializable {
 	@Column(name = "mode", nullable = false)
 	private Integer mode;
 	@Column(name = "datecreated", nullable = false)
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime datecreated;
 	@Column(name = "lastupdate", nullable = false)
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime lastupdate;
 	@Column(name = "website", length = 100, nullable = true)
 	private String website;
@@ -81,26 +83,8 @@ public class Customers implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Orders> orders;
-	
-	public int getSizeOrders() {
-		int sizeOrders = 0;
-		if (this.orders != null)
-			sizeOrders = this.orders.size();
-		return sizeOrders;
-	}
-	
-	public void setSomeAttr() {
-		if (this.customerid == null) {
-			this.setLastupdate(null);
-			this.setDatecreated(new DateTime());
-			this.setLastupdate(this.getDatecreated());
-			this.setMode(1);
-			if (this.version == null) {
-				this.setVersion(1);
-			}
-		} else {
-			this.setLastupdate(new DateTime());
-		}
+
+	public void createCustomercode() {
 		this.customercode = this.symbol + this.type.getTypeid() + this.field.getFieldid() + String.format("%04d", this.serial);
 	}
 
@@ -275,5 +259,5 @@ public class Customers implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }
