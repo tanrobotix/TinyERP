@@ -1,5 +1,5 @@
 $(function() {
-	$('.datepicker').datetimepicker({
+	$('#startdate, #finishdate').datetimepicker({
 		locale : 'vi',
 		format : 'L',
 		icons : {
@@ -60,10 +60,11 @@ function showAlertError(text="Đã xảy ra lỗi, bạn vui lòng thử lại h
  * customerid } }); ajax.done(function(data) { console.log(data); }); }
  */
 
-function allInOne(mode, customerid) {
+function allInOne(request , mode, id) {
 	var form = $('<form>', {'action': contextPath + '/AllInOne', 'method': 'POST'})
+	.append($('<input>', {'name': 'request', 'value': request, 'type': 'hidden'}))
 	.append($('<input>', {'name': 'mode', 'value': mode, 'type': 'hidden'}))
-    .append($('<input>', {'name': 'customerid', 'value': customerid, 'type': 'hidden'}));
+    .append($('<input>', {'name': 'id', 'value': id, 'type': 'hidden'}));
 	
 	form.appendTo('body').submit();
 }
@@ -173,6 +174,7 @@ function deleteOrder(orderid) {
 // AllInOne page
 function saveCustomer(typeRequest) {
 	var data = $('#customerForm').serialize();
+	console.log(data);
 	var ajax = $.ajax({
 					type : "POST",
 					url : contextPath + "/SaveCustomer/" + typeRequest,
@@ -186,17 +188,64 @@ function saveCustomer(typeRequest) {
 			title : 'Lưu thông tin khách hàng thành công!',
 			showCloseButton : true,
 		}).then(function () {
+			$('#saveOrder').click();
 		}).catch(swal.noop)
 	});
 	
-	ajax.fail(/*function(jqXHR, textStatus, errorThrown) {
-		showAlertError(jqXHR.responseText, textStatus + " " + jqXHR.status + " !");
-	}*/function() {
+	ajax.fail(/*
+				 * function(jqXHR, textStatus, errorThrown) {
+				 * showAlertError(jqXHR.responseText, textStatus + " " +
+				 * jqXHR.status + " !"); }
+				 */function() {
 		showAlertError();
-	}
-			);
+	});
 
 }
+
+function saveOrder() {
+	var data = $('#orderForm').serialize();
+	/*var fdata = new FormData();
+	if($("#fileupload")[0].files.length>0)
+	       fdata.append("file",$("#fileupload")[0].files[0]);
+	var data = new FormData($("#orderForm"));*/
+	/*+ '&files%5B0%5D.name=' + 'xyz'*/
+	console.log($("#fileupload")[0].files[0]);
+	/*console.log($('#fileupload'));*/
+	var ajax = $.ajax({
+		
+					type : "POST",
+					url : contextPath + "/SaveOrder",
+					data : data + "&" + $('#fileupload').attr("name") + "=" + $("#fileupload")[0].files[0].name
+				});
+	
+	ajax.done(function() {
+		swal({
+			type : 'success',
+			text : 'Thông tin đơn hàng được lưu thành công!',
+			title : 'Lưu thông tin đơn hàng thành công!',
+			showCloseButton : true,
+		}).then(function () {
+		}).catch(swal.noop)
+	});
+	
+	ajax.fail(function() {
+		showAlertError();
+	});
+
+}
+
+$(function(){
+	$('#saveAll').click(function(e) {
+		$('#saveCustomer').click();
+	});	
+});
+
+$(function() {
+	$('#orderForm').submit(function(e) {
+		e.preventDefault();
+		saveOrder();
+	});
+});
 
 $(function() {
 	$('#customerForm').submit(function(e) {
@@ -237,6 +286,8 @@ $(function() {
 		}
 	});
 });
+
+
 
 $(function() {
 	$('#symbol').on('input', function() {
@@ -347,17 +398,17 @@ $(function() {
 	});
 });
 
-function changeRequest(mode) {
+function changeMode(mode) {
 	if (mode == 1) { 
-		$('#fsCustomer').removeAttr('disabled');
-		$('#changeRequest').attr('style', 'display: none;');
-		$('#saveCustomer').removeAttr('style');
+		$('fieldset').removeAttr('disabled');
+		$('.changeMode').attr('style', 'display: none;');
+		$('.save').removeAttr('style');
 	}
 }
 
 $(function() {
-	$('#changeRequest').click(function() {
-		changeRequest(1);
+	$('.changeMode').click(function() {
+		changeMode(1);
 	});
 });
 /*

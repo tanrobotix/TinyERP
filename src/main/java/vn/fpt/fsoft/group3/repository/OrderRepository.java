@@ -34,4 +34,9 @@ public interface OrderRepository extends JpaRepository<Orders, Long>{
     		+ " where o.ordercode like ?1 "
     		+ " and o.customer.customercode like ?2 " )*/
 	public List<Orders> findByOrdercodeLikeAndCustomerCustomercodeLikeAndModeAndCustomerMode(String ordercode, String customercode, Integer mode, Integer customermode);
+	
+	@Query(" select max(o.serial) " + " from Orders o " 
+	+ " where MONTH(o.startdate) = ?1 "
+	+ " and YEAR(o.startdate) = ?2 " )
+	public Integer findMaxSerialInMonthAndYear(Integer month, Integer year);
 }

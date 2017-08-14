@@ -3,12 +3,14 @@ package vn.fpt.fsoft.group3.controller;
 import vn.fpt.fsoft.group3.entity.Customers;
 import vn.fpt.fsoft.group3.entity.Fields;
 import vn.fpt.fsoft.group3.entity.Orders;
+import vn.fpt.fsoft.group3.entity.Requirements;
 import vn.fpt.fsoft.group3.entity.Types;
 import vn.fpt.fsoft.group3.repository.CustomerRepository;
 import vn.fpt.fsoft.group3.repository.FieldRepository;
 import vn.fpt.fsoft.group3.repository.OrderRepository;
 import vn.fpt.fsoft.group3.repository.TypeRepository;
 
+import org.joda.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +42,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 
  */
 @Controller
-@SessionAttributes("customerForm")
+@SessionAttributes(value = {"customerForm", "orderForm"})
 public class CustomerController {
 
 	@Autowired
@@ -100,22 +102,42 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/AllInOne", method = RequestMethod.POST)
-	public String allInOne(Model model, @RequestParam(value = "customerid", required = false) Long customerid,
-			@RequestParam(value = "mode", required = false) Integer mode) {
+	public String allInOne(Model model, 
+			@RequestParam(value = "request", required = false) Integer request,
+			@RequestParam(value = "mode", required = false) Integer mode,
+			@RequestParam(value = "id", required = false) Long id) {
 
 		Customers customerForm;
-		/*Orders orderForm;*/
+		Orders orderForm;
 
-		if (customerid == null) {
-			customerForm = new Customers();
-		} else {
-			customerForm = customerRepository.findOne(customerid);		
+		switch (request) {
+		
+		case 0:
+			if (id == null) {
+				customerForm = new Customers();
+			} else {
+				customerForm = customerRepository.findOne(id);
+			}
+			model.addAttribute("customerForm", customerForm);
+			break;	
+		case 1:
+			if (id == null) {
+				orderForm = new Orders();
+				orderForm.setCustomer(new Customers());
+			} else {
+				orderForm = orderRepository.findOne(id);
+			}
+			
+			customerForm = orderForm.getCustomer();
+			model.addAttribute("customerForm", customerForm);
+			model.addAttribute("orderForm", orderForm);
+			break;
+		default:
+			break;
 		}
 		
-		/*orderForm = orderRepository.findOne((long) 1);*/
-		/*model.addAttribute("orderForm", orderForm);*/
+		model.addAttribute("request", request);
 		model.addAttribute("mode", mode);
-		model.addAttribute("customerForm", customerForm);
 		model.addAttribute("Types", typeRepository.findAll());
 		model.addAttribute("Fields", fieldRepository.findAll());
 
@@ -139,7 +161,6 @@ public class CustomerController {
 			customerForm.setCustomerid(null);
 			customerForm.setVersion(1);
 			customerForm.createCustomercode();
-			customerForm.createCustomercode();
 			break;
 		case 1:
 			customerForm.setCustomerid(null);
@@ -161,7 +182,29 @@ public class CustomerController {
 		}
 		
 		customerRepository.save(customerForm);
-		status.setComplete();
+	}
+	
+	@RequestMapping(value = "/SaveOrder", method = RequestMethod.POST)
+	public @ResponseBody void saveOrder(@ModelAttribute("orderForm") Orders orderForm, 
+			SessionStatus status) {
+		
+		if (orderForm.getOrderid() == null) {
+			orderForm.setStatus(false);
+			orderForm.setMode(1);
+		}
+		
+		Integer month = orderForm.getStartdate2().getMonthOfYear();
+		Integer year = orderForm.getStartdate2().getYear();
+		Integer serial = orderRepository.findMaxSerialInMonthAndYear(month, year);
+		if (serial == null) {
+			serial = 1;
+		} else {
+			serial = serial + 1;
+		}
+		orderForm.setSerial(serial);
+		orderForm.createOrdercode();
+		
+		orderRepository.save(orderForm);
 	}
 	
 	@RequestMapping(value = "/GetMaxSerial", method = RequestMethod.POST)

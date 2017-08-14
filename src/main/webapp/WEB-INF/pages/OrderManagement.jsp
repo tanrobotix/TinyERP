@@ -84,8 +84,8 @@
 									<div class="toolbar">
 										<div class="form-group form-inline">
 											<div class="form-group">
-												<a href="<c:url value="AllInOne" />"
-													class="btn btn-success btn-sm">Thêm</a>
+												<button onclick="allInOne(1, 1);"
+													class="btn btn-success btn-sm">Thêm</button>
 											</div>
 											<div class="form-group">
 												<input id="ordercode" name="ordercode" type="text"
@@ -143,17 +143,16 @@
 									"dataSrc" : "",
 									"data" : function(d) {
 										d.ordercode = $('#ordercode').val();
-										d.customercode = $('#customercode')
-												.val();
+										d.customercode = $('#customercode').val();
 									}
 								},
 								"columns" : [
 										{
 											"render" : function(data, type,
 													full, meta) {
-												return '<a href="AllInOne?orderid='
+												return '<a role="button" onclick="allInOne(1, 0, '
 														+ full.orderid
-														+ '&view=1">'
+														+ ');">'
 														+ full.ordercode
 														+ '</a>';
 											}
@@ -167,23 +166,27 @@
 										{
 											"render" : function(data, type,
 													full, meta) {
-												var year = full.startdate.year, month = formatTime(full.startdate.monthOfYear), day = formatTime(full.startdate.dayOfMonth);
+												console.log(full);
+												var year = full.startdate2.year, month = formatTime(full.startdate2.monthOfYear), day = formatTime(full.startdate2.dayOfMonth);
 												return '<span class="hidden">'
 														+ year + "/" + month
 														+ "/" + day + '</span>'
 														+ day + "/" + month
-														+ "/" + year
+														+ "/" + year;
 											}
 										},
 										{
 											"render" : function(data, type,
 													full, meta) {
-												var year = full.finishdate.year, month = formatTime(full.finishdate.monthOfYear), day = formatTime(full.finishdate.dayOfMonth);
+												if (!full.finishdate) {
+													return 'Không giới hạn';
+												}
+												var year = full.finishdate2.year, month = formatTime(full.finishdate2.monthOfYear), day = formatTime(full.finishdate2.dayOfMonth);
 												return '<span class="hidden">'
 														+ year + "/" + month
 														+ "/" + day + '</span>'
 														+ day + "/" + month
-														+ "/" + year
+														+ "/" + year;
 											}
 										},
 										{
@@ -206,9 +209,10 @@
 														+ '<span class="caret"></span>'
 														+ '</button>'
 														+ '<ul class="dropdown-menu pull-right">'
-														+ '<li><a href="AllInOne?customerid='
+														+ '<li onclick="allInOne(1, 1, '
 														+ full.orderid
-														+ '"> <i class="text-warning fa fa-edit"></i> Sửa</a></li>'
+														+ ')"><a role="button">'
+														+ '<i class="text-warning fa fa-edit"></i> Sửa</a></li>'
 														+ '<li onclick="deleteOrder('
 														+ full.orderid
 														+ ')"><a role="button"><i class="text-danger fa fa-times"></i> Xóa</a></li>'

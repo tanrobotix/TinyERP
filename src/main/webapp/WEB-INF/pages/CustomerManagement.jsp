@@ -84,7 +84,7 @@
 									<div class="toolbar">
 										<div class="form-group form-inline">
 											<div class="form-group">
-												<button onclick="allInOne(1);"
+												<button onclick="allInOne(0, 1);"
 													class="btn btn-success btn-sm">Thêm</button>
 											</div>
 											<div class="form-group">
@@ -158,7 +158,7 @@
 									{
 										"render" : function(data, type, full,
 												meta) {
-											return '<a role="button" onclick="allInOne(0, '
+											return '<a role="button" onclick="allInOne(0, 0, '
 													+ full.customerid
 													+ ');">'
 													+ full.customercode
@@ -196,7 +196,7 @@
 													+ '<span class="caret"></span>'
 													+ '</button>'
 													+ '<ul class="dropdown-menu pull-right">'
-													+ '<li onclick="allInOne(1, ' 
+													+ '<li onclick="allInOne(0, 1, ' 
 													+ full.customerid
 													+ ')"><a role="button">'
 													+ '<i class="text-warning fa fa-edit"></i> Sửa</a></li>'
