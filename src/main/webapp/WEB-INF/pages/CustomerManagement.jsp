@@ -142,7 +142,7 @@
 								"data" : function(d) {
 									d.name = $('#name').val();
 								},
-								"error": function() {
+								"error" : function() {
 									/* switch (jqXHR.status) {
 										case 0: 
 											showAlertError("Máy chủ không hoạt động");
@@ -152,7 +152,7 @@
 											break;
 									}  */
 									showAlertError();
-						        }
+								}
 							},
 							"columns" : [
 									{
@@ -196,7 +196,7 @@
 													+ '<span class="caret"></span>'
 													+ '</button>'
 													+ '<ul class="dropdown-menu pull-right">'
-													+ '<li onclick="allInOne(0, 1, ' 
+													+ '<li onclick="allInOne(0, 1, '
 													+ full.customerid
 													+ ')"><a role="button">'
 													+ '<i class="text-warning fa fa-edit"></i> Sửa</a></li>'
@@ -206,8 +206,12 @@
 													+ '<li><a href="HistoryCustomer/'
 													+ full.customercode
 													+ '"><i class="text-muted fa fa-history"></i> Xem lịch sử</a></li>'
-													+ '<li><a role="button"><i class="text-success fa fa-plus"></i> Thêm đơn hàng</a></li>'
-													+ '<li><a role="button"><i class="text-info fa fa-list"></i> Xem đơn hàng</a></li>'
+													+ '<li onclick="allInOne(2, 1, '
+													+ full.customerid
+													+ ')"><a role="button"><i class="text-success fa fa-plus"></i> Thêm đơn hàng</a></li>'
+													+ '<li><a href="OrderManagement?customercode='
+													+ full.customercode
+													+ '"><i class="text-info fa fa-list"></i> Xem đơn hàng</a></li>'
 													+ '</ul>' + '</div>';
 										}
 									}, ],

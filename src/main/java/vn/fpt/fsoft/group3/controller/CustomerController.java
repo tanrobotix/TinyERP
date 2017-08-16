@@ -8,14 +8,18 @@ import vn.fpt.fsoft.group3.entity.Types;
 import vn.fpt.fsoft.group3.repository.CustomerRepository;
 import vn.fpt.fsoft.group3.repository.FieldRepository;
 import vn.fpt.fsoft.group3.repository.OrderRepository;
+import vn.fpt.fsoft.group3.repository.RequirementReponsitory;
 import vn.fpt.fsoft.group3.repository.TypeRepository;
 
 import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +46,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 
  */
 @Controller
-@SessionAttributes(value = {"customerForm", "orderForm"})
+@SessionAttributes(value = { "customerForm", "orderForm" })
 public class CustomerController {
 
 	@Autowired
@@ -53,6 +57,8 @@ public class CustomerController {
 	private TypeRepository typeRepository;
 	@Autowired
 	private FieldRepository fieldRepository;
+	@Autowired
+	private RequirementReponsitory requirementReponsitory;
 
 	@RequestMapping("/")
 	public String index() {
@@ -100,40 +106,63 @@ public class CustomerController {
 		customerRepository.save(customer);
 
 	}
-	
+
 	@RequestMapping(value = "/AllInOne", method = RequestMethod.POST)
 	public String allInOne(Model model, 
-			@RequestParam(value = "request", required = false) Integer request,
-			@RequestParam(value = "mode", required = false) Integer mode,
-			@RequestParam(value = "id", required = false) Long id) {
-
+			@RequestParam(value = "request", required = true) Integer request,
+			@RequestParam(value = "mode", required = true) Integer mode,
+			@RequestParam(value = "id", required = true) Long id, HttpSession session) {
+		
+		session.invalidate();
+		 
 		Customers customerForm;
 		Orders orderForm;
 
 		switch (request) {
-		
 		case 0:
 			if (id == null) {
 				customerForm = new Customers();
 			} else {
 				customerForm = customerRepository.findOne(id);
 			}
+			
 			model.addAttribute("customerForm", customerForm);
-			break;	
+			break;
+
 		case 1:
 			if (id == null) {
 				orderForm = new Orders();
 				orderForm.setCustomer(new Customers());
+				ArrayList<Requirements> arrList = new ArrayList<Requirements>();
+				for (int i = 0; i < 10; i++) {
+					arrList.add(new Requirements());
+				}
+				orderForm.setRequirements(arrList);
 			} else {
 				orderForm = orderRepository.findOne(id);
 			}
-			
+
 			customerForm = orderForm.getCustomer();
 			model.addAttribute("customerForm", customerForm);
 			model.addAttribute("orderForm", orderForm);
 			break;
+
+		case 2:
+			orderForm = new Orders();
+			orderForm.setCustomer(customerRepository.findOne(id));
+			customerForm = orderForm.getCustomer();
+			ArrayList<Requirements> arrList = new ArrayList<Requirements>();
+			for (int i = 0; i < 10; i++) {
+				arrList.add(new Requirements());
+			}
+			orderForm.setRequirements(arrList);
+			model.addAttribute("customerForm", customerForm);
+			model.addAttribute("orderForm", orderForm);
+			break;
+
 		default:
 			break;
+
 		}
 		
 		model.addAttribute("request", request);
@@ -143,10 +172,10 @@ public class CustomerController {
 
 		return "AllInOne";
 	}
-	
+
 	@RequestMapping(value = "/SaveCustomer/{typeRequest}", method = RequestMethod.POST)
-	public @ResponseBody void saveCustomer(@ModelAttribute("customerForm") Customers customerForm,
-			@PathVariable Integer typeRequest, SessionStatus status) {
+	public @ResponseBody Customers saveCustomer(@ModelAttribute("customerForm") Customers customerForm,
+			@PathVariable Integer typeRequest, HttpSession session) {
 		switch (typeRequest) {
 		case -1:
 			if (customerForm.getCustomerid() == null) {
@@ -164,15 +193,16 @@ public class CustomerController {
 			break;
 		case 1:
 			customerForm.setCustomerid(null);
-			customerForm.setVersion(customerForm.getVersion() + 1);
-			customerForm.setMode(1);	
+			Customers temp = customerRepository.findTopByCustomercodeOrderByVersionDesc(customerForm.getCustomercode());
+			Integer version = temp.getVersion() + 1;
+			customerForm.setVersion(version);
+			customerForm.setMode(1);
 			break;
 		case 2:
 			break;
 		default:
 			break;
 		}
-		
 		if (customerForm.getCustomerid() == null) {
 			customerForm.setDatecreated(new DateTime());
 			customerForm.setLastupdate(customerForm.getDatecreated());
@@ -182,31 +212,37 @@ public class CustomerController {
 		}
 		
 		customerRepository.save(customerForm);
-	}
-	
-	@RequestMapping(value = "/SaveOrder", method = RequestMethod.POST)
-	public @ResponseBody void saveOrder(@ModelAttribute("orderForm") Orders orderForm, 
-			SessionStatus status) {
-		
-		if (orderForm.getOrderid() == null) {
-			orderForm.setStatus(false);
-			orderForm.setMode(1);
+		Orders orderForm = (Orders) session.getAttribute("orderForm");
+		if (orderForm != null && orderForm.getOrderid() != null) {
+			orderRepository.save(orderForm);
 		}
 		
+		return customerForm;
+	}
+
+	@RequestMapping(value = "/SaveOrder", method = RequestMethod.POST)
+	public @ResponseBody void saveOrder(@ModelAttribute("orderForm") Orders orderForm) {
+
 		Integer month = orderForm.getStartdate2().getMonthOfYear();
 		Integer year = orderForm.getStartdate2().getYear();
 		Integer serial = orderRepository.findMaxSerialInMonthAndYear(month, year);
-		if (serial == null) {
-			serial = 1;
-		} else {
-			serial = serial + 1;
-		}
+		serial = (serial == null) ? 1 : serial + 1;
 		orderForm.setSerial(serial);
-		orderForm.createOrdercode();
+
+		if (orderForm.getOrderid() == null) {
+			orderForm.setStatus(false);
+			orderForm.setMode(1);
+			orderForm.createOrdercode();
+		}
 		
+		List<Requirements> listRequirements = orderForm.getRequirements();
+		for(int i = 0; i < listRequirements.size(); i++){
+			listRequirements.get(i).setOrder(orderForm);
+		}
+		orderForm.setRequirements(listRequirements);
 		orderRepository.save(orderForm);
 	}
-	
+
 	@RequestMapping(value = "/GetMaxSerial", method = RequestMethod.POST)
 	public @ResponseBody Integer getMaxSerial(@RequestParam(value = "symbol", required = true) String symbol) {
 

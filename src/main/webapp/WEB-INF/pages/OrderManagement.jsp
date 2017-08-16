@@ -179,7 +179,7 @@
 											"render" : function(data, type,
 													full, meta) {
 												if (!full.finishdate) {
-													return 'Không giới hạn';
+													return '';
 												}
 												var year = full.finishdate2.year, month = formatTime(full.finishdate2.monthOfYear), day = formatTime(full.finishdate2.dayOfMonth);
 												return '<span class="hidden">'

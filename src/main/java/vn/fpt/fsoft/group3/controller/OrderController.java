@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 /**
  *
@@ -38,19 +40,19 @@ public class OrderController {
 
 	@RequestMapping(value = "/GetListOrders", method = RequestMethod.GET)
 	public @ResponseBody List<Orders> getListCustomers(
-			@RequestParam(value = "ordercode", defaultValue="%") String ordercode,
-			@RequestParam(value = "customercode", defaultValue="%") String customercode) {
+			@RequestParam(value = "ordercode", defaultValue = "%") String ordercode,
+			@RequestParam(value = "customercode", defaultValue = "%") String customercode) {
 
-		return orderRepository.findByOrdercodeLikeAndCustomerCustomercodeLikeAndModeAndCustomerMode(ordercode, customercode, 1, 1);
+		return orderRepository.findByOrdercodeLikeAndCustomerCustomercodeLikeAndModeAndCustomerMode(ordercode,
+				customercode, 1, 1);
 	}
-	
+
 	@RequestMapping(value = "/DeleteOrder", method = RequestMethod.POST)
 	public @ResponseBody void deleteOrder(@RequestParam(value = "orderid", required = true) Long orderid) {
-		
+
 		Orders order = orderRepository.findOne(orderid);
 		order.setMode(0);
 		orderRepository.save(order);
-		
-	}
 
+	}
 }

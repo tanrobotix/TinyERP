@@ -127,9 +127,9 @@
 									{
 										"render" : function(data, type, full,
 												meta) {
-											return '<a href="AllInOne?mode=view&customerid='
+											return '<a role="button" onclick="allInOne(0, 0, '
 													+ full.customerid
-													+ '">'
+													+ ');">'
 													+ full.customercode
 													+ '</a>';
 										}

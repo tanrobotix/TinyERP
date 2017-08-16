@@ -3,6 +3,7 @@ package vn.fpt.fsoft.group3.entity;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -69,7 +70,7 @@ public class Orders implements Serializable {
 	private Customers customer;
 	@JsonIgnore
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Requirements> requirements;
+	private List<Requirements> requirements;
 	@JsonIgnore
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Files> files;
@@ -141,8 +142,12 @@ public class Orders implements Serializable {
 		return date;
 	}
 	public void setFinishdate(String finishdate) {
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("d/M/Y");
-		this.finishdate = dtf.parseLocalDate(finishdate);
+		if ("".equals(finishdate)) {
+			this.finishdate = null;
+		} else {
+			DateTimeFormatter dtf = DateTimeFormat.forPattern("d/M/Y");
+			this.finishdate = dtf.parseLocalDate(finishdate);
+		}
 	}
 	public LocalDate getFinishdate2() {
 		return this.finishdate;
@@ -179,10 +184,10 @@ public class Orders implements Serializable {
 							+ String.format("%02d",this.startdate.getYear()) 
 							+ String.format("%04d", this.serial);	
 	}
-	public Set<Requirements> getRequirements() {
+	public List<Requirements> getRequirements() {
 		return requirements;
 	}
-	public void setRequirements(Set<Requirements> requirements) {
+	public void setRequirements(List<Requirements> requirements) {
 		this.requirements = requirements;
 	}
 	public Set<Files> getFiles() {

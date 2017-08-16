@@ -50,7 +50,7 @@ function showAlertError(text="Đã xảy ra lỗi, bạn vui lòng thử lại h
 	swal({
 		type : 'error',
 		title : title,
-		text: text
+		html: text
 	}).catch(swal.noop)
 }
 
@@ -174,31 +174,35 @@ function deleteOrder(orderid) {
 // AllInOne page
 function saveCustomer(typeRequest) {
 	var data = $('#customerForm').serialize();
-	console.log(data);
 	var ajax = $.ajax({
 					type : "POST",
 					url : contextPath + "/SaveCustomer/" + typeRequest,
 					data : data
 				});
 	
-	ajax.done(function() {
+	ajax.done(function(customer) {
 		swal({
 			type : 'success',
 			text : 'Thông tin khách hàng được lưu thành công!',
 			title : 'Lưu thông tin khách hàng thành công!',
 			showCloseButton : true,
 		}).then(function () {
-			$('#saveOrder').click();
+			initValueSymbol = customer.symbol;
+			initValueType = customer.type.typeid; 
+			initValueField = customer.field.fieldid; 
+			initValueSerial = formatSerial(customer.serial);
+			hasOrders = (customer.sizeorders > 0) ? "true" : "false";
+			$('#serial').val(initValueSerial);
+			dataCustomerForm = $('#customerForm').serialize();
 		}).catch(swal.noop)
 	});
 	
-	ajax.fail(/*
-				 * function(jqXHR, textStatus, errorThrown) {
-				 * showAlertError(jqXHR.responseText, textStatus + " " +
-				 * jqXHR.status + " !"); }
-				 */function() {
-		showAlertError();
-	});
+	ajax.fail(function(jqXHR, textStatus, errorThrown) {
+				 showAlertError(jqXHR.responseText, textStatus + " " +
+				 jqXHR.status + " !"); 
+				 });
+				 /*function() {
+		showAlertError();*/
 
 }
 
@@ -209,13 +213,13 @@ function saveOrder() {
 	       fdata.append("file",$("#fileupload")[0].files[0]);
 	var data = new FormData($("#orderForm"));*/
 	/*+ '&files%5B0%5D.name=' + 'xyz'*/
-	console.log($("#fileupload")[0].files[0]);
+	/*console.log($("#fileupload")[0].files[0]);*/
 	/*console.log($('#fileupload'));*/
 	var ajax = $.ajax({
 		
 					type : "POST",
 					url : contextPath + "/SaveOrder",
-					data : data + "&" + $('#fileupload').attr("name") + "=" + $("#fileupload")[0].files[0].name
+					data : data /*+ "&" + $('#fileupload').attr("name") + "=" + $("#fileupload")[0].files[0].name*/
 				});
 	
 	ajax.done(function() {
@@ -234,11 +238,11 @@ function saveOrder() {
 
 }
 
-$(function(){
+/*$(function(){
 	$('#saveAll').click(function(e) {
 		$('#saveCustomer').click();
 	});	
-});
+});*/
 
 $(function() {
 	$('#orderForm').submit(function(e) {
@@ -248,9 +252,13 @@ $(function() {
 });
 
 $(function() {
+	dataCustomerForm = $('#customerForm').serialize();
 	$('#customerForm').submit(function(e) {
 		e.preventDefault();
-		
+		if (dataCustomerForm === $('#customerForm').serialize()) {
+			showAlertError("Bạn chưa thay đổi bất cứ thông tin nào của khách hàng", "Error!")
+			return false;
+		}
 		if (hasOrders === "false") {
 			saveCustomer(-1);
 		} else {	
@@ -407,10 +415,18 @@ function changeMode(mode) {
 }
 
 $(function() {
+	$('.changeMode').click(function() {	
+		$(this).parent().parent().prev().removeAttr('disabled');
+		$(this).attr('style', 'display: none;');
+		$(this).next().removeAttr('style');
+	});
+});
+
+/*$(function() {
 	$('.changeMode').click(function() {
 		changeMode(1);
 	});
-});
+});*/
 /*
  * $(function() { $('input[type=mytel]').keydown(function(e) { // var l =
  * this.value.length; // var curval = $(this).val(); if (e.which == 8 || 48 >

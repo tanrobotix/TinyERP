@@ -28,8 +28,8 @@ public class Requirements implements Serializable {
 	private static final long serialVersionUID = 5L;
 
 	@Id
-	@Column(name = "requirementid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "requirementid")
 	private Integer requirementid;
 	@Column(name = "properties", length = 50, nullable = false)
 	private String properties;
@@ -38,6 +38,7 @@ public class Requirements implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "orderid", nullable = false)
 	private Orders order;
+	
 	public Integer getRequirementid() {
 		return requirementid;
 	}

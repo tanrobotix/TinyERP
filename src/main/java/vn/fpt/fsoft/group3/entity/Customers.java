@@ -2,6 +2,7 @@ package vn.fpt.fsoft.group3.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
@@ -84,6 +85,13 @@ public class Customers implements Serializable {
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Orders> orders;
 
+	public int getSizeorders() {
+		if (this.orders != null)
+			return this.orders.size();
+		else
+			return 0;
+	}
+	
 	public void createCustomercode() {
 		this.customercode = this.symbol + this.type.getTypeid() + this.field.getFieldid() + String.format("%04d", this.serial);
 	}
@@ -259,5 +267,6 @@ public class Customers implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 
 }

@@ -41,6 +41,8 @@ public interface CustomerRepository extends JpaRepository<Customers, Long> {
 	public List<Customers> findByCustomercodeOrderByVersionDesc(String customercode);
 	
 	public List<Customers> findByMode(@Param("mode") Integer mode);
+	
+	public Customers findTopByCustomercodeOrderByVersionDesc(String Customercode);
 
 	
 	/*public Customers findTopByRequiredBySerialDesc(String required);

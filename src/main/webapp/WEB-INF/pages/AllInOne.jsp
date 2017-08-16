@@ -332,7 +332,7 @@
 												</div>
 											</div>
 										</div>
-										<c:if test="${request == 1}">
+										<c:if test="${request == 1 || request == 2}">
 											<div class="panel panel-default">
 												<div class="panel-heading">
 													<h4 class="panel-title">
@@ -477,6 +477,8 @@
 																						</tr>
 																					</thead>
 																					<tbody>
+																						<c:set var="length"
+																							value="${fn:length(orderForm.requirements)}" />
 																						<c:forEach items="${orderForm.requirements}"
 																							var="requirement" varStatus="no">
 																							<tr>
@@ -491,40 +493,59 @@
 																									value="${requirement.value}"></td>
 																							</tr>
 																						</c:forEach>
+																						<%-- <c:choose>
+																							<c:when test="${length == 0}">
+																								<c:forEach var="i" begin="0" end="9">
+																									<tr>
+																										<td>${i+1}</td>
+																										<td><input
+																											name="requirements[${i}].properties"
+																											type="text" maxlength="50" value=""></td>
+																										<td><input
+																											name="requirements[${i}].value" type="text"
+																											maxlength="50" value=""></td>
+																										<td hidden><input
+																											name="requirements[${i}].order.orderid"
+																											type="text" maxlength="50"
+																											value="${orderForm.orderid}"></td>
+																									</tr>
+																								</c:forEach>
+																							</c:when>
+																							<c:otherwise>
+																								<c:forEach items="${orderForm.requirements}"
+																									var="requirement" varStatus="no">
+																									<tr>
+																										<td>${no.count}</td>
+																										<td><input
+																											name="requirements[${no.index}].properties"
+																											type="text" maxlength="50"
+																											value="${requirement.properties}"></td>
+																										<td><input
+																											name="requirements[${no.index}].value"
+																											type="text" maxlength="50"
+																											value="${requirement.value}"></td>
+																									</tr>
+																								</c:forEach>
+																							</c:otherwise>
+																						</c:choose> --%>
 																					</tbody>
 																				</table>
 																			</div>
 																		</div>
 																	</div>
 																</div>
-																<%-- name="files[${no.index}].name" --%>
-																<c:forEach items="${orderForm.files}" var="file"
-																	varStatus="no">
-																	<input id="fileupload" type="file" name="files[${no.index}].name"  value="mmnv"
-																		class="form-control" />
-																</c:forEach>
 															</fieldset>
 															<div class="row">
 																<div class="col-md-12 text-center">
+																	<a class="changeMode btn btn-info">Cập nhật thông
+																		tin đơn hàng</a>
 																	<button id="saveOrder" type="submit"
-																		style="display: none;" class="btn btn-info">Lưu
-																		thông tin đơn hàng</button>
+																		class="btn btn-info save" style="display: none;">
+																		Lưu thông tin đơn hàng</button>
 																</div>
 															</div>
 														</form:form>
 													</div>
-												</div>
-											</div>
-											<br>
-											<div class="row">
-												<div class="col-md-12 text-center">
-													<a class="changeMode btn btn-info">Cập nhật</a>
-													<button id="saveAll" type="button" style="display: none;"
-														class="save btn btn-info">
-														<i class="fa fa-save"></i> Lưu
-													</button>
-													<button id="back" type="button" class="btn btn-default">Trở
-														về</button>
 												</div>
 											</div>
 										</c:if>
@@ -541,8 +562,8 @@
 	<%@include file="includes/FixedPlugin.jsp"%>
 	<script>
 		var initValueSymbol = "${customerForm.symbol}", initValueType = "${customerForm.type.typeid}", initValueField = "${customerForm.field.fieldid}", initValueSerial = formatSerial("${customerForm.serial}"), hasOrders = "${fn:length(customerForm.orders) > 0}";
-
-		$('#serial').val(initValueSerial)
+		var dataCustomerForm;
+		$('#serial').val(initValueSerial);
 		changeMode("${mode}");
 	</script>
 </body>
